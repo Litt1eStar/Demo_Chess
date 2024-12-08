@@ -10,11 +10,15 @@ public class Cell : MonoBehaviour,IPointerClickHandler
     public void OnPointerClick(PointerEventData eventData)
     {
         GameManager.Instance.SetClickedCell(this);
-        EventOnClick();
     }
 
-    private void EventOnClick()
+    public void EventOnClick()
     {
         m_selection.SetActive(true);
+    }
+
+    public void ClearCell()
+    {
+        m_selection.SetActive(false);
     }
 }

@@ -22,6 +22,22 @@ public class GameManager : MonoBehaviour
     }
     public void SetClickedCell(Cell _clickedCell)
     {
+        ClearCellData();
+        EventOnClick(_clickedCell);
+    }
+
+    private void ClearCellData()
+    {
+        if (clickedCell != null)
+        {
+            clickedCell.ClearCell();
+        }
+        clickedCell = null;
+    }
+
+    private void EventOnClick(Cell _clickedCell)
+    {
         clickedCell = _clickedCell;
+        clickedCell.EventOnClick();
     }
 }
