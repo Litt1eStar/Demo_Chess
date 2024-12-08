@@ -6,7 +6,7 @@ using UnityEngine;
 public class BoardController : MonoBehaviour
 {
     [SerializeField] private GameObject cell_h, cell_nh;
-    [SerializeField] private GameObject chess_r, chess_y;
+    [SerializeField] private GameObject chess_enemy, chess_ally;
     [SerializeField] private Transform board_pos;
 
     [SerializeField] private int size_x = 8, size_y = 8, row_to_generate = 2;
@@ -37,12 +37,14 @@ public class BoardController : MonoBehaviour
                     {
                         GameObject m_cell = Instantiate(cell_h, board_pos);
                         Cell cell = m_cell.GetComponent<Cell>();
+                        cell.SetCellData(x, y);
                         cells[x, y] = cell;
                     }
                     else
                     {
                         GameObject m_cell = Instantiate (cell_nh, board_pos);
                         Cell cell = m_cell.GetComponent<Cell>();
+                        cell.SetCellData(x, y);
                         cells[x, y] = cell;
                     }
                 }else if(x % 2 != 0)
@@ -51,12 +53,14 @@ public class BoardController : MonoBehaviour
                     {
                         GameObject m_cell = Instantiate(cell_nh, board_pos);
                         Cell cell = m_cell.GetComponent<Cell>();
+                        cell.SetCellData(x, y);
                         cells[x, y] = cell;
                     }
                     else
                     {
                         GameObject m_cell = Instantiate(cell_h, board_pos);
                         Cell cell = m_cell.GetComponent<Cell>();
+                        cell.SetCellData(x, y);
                         cells[x, y] = cell;
                     }
                 }
@@ -82,8 +86,9 @@ public class BoardController : MonoBehaviour
                         {
                             Cell cell = cells[x, y];
                             Transform pos = cell.gameObject.transform;
-                            GameObject m_chess = Instantiate(chess_y, pos);
+                            GameObject m_chess = Instantiate(chess_ally, pos);
                             ChessPiece piece = m_chess.GetComponent<ChessPiece>();
+                            piece.SetChessData(ChessType.ALLY);
                             chessPieces.Append(piece);
 
                             cell.SetChessOnCell(piece);
@@ -92,8 +97,9 @@ public class BoardController : MonoBehaviour
                         {
                             Cell cell = cells[x, y];
                             Transform pos = cell.gameObject.transform;
-                            GameObject m_chess = Instantiate(chess_r, pos);
+                            GameObject m_chess = Instantiate(chess_enemy, pos);
                             ChessPiece piece = m_chess.GetComponent<ChessPiece>();
+                            piece.SetChessData(ChessType.ENEMY);
                             chessPieces.Append(piece);
 
                             cell.SetChessOnCell(piece);
@@ -106,8 +112,9 @@ public class BoardController : MonoBehaviour
                         {
                             Cell cell = cells[x, y];
                             Transform pos = cell.gameObject.transform;
-                            GameObject m_chess = Instantiate(chess_y, pos);
+                            GameObject m_chess = Instantiate(chess_ally, pos);
                             ChessPiece piece = m_chess.GetComponent<ChessPiece>();
+                            piece.SetChessData(ChessType.ALLY);
                             chessPieces.Append(piece);
 
                             cell.SetChessOnCell(piece);
@@ -116,8 +123,9 @@ public class BoardController : MonoBehaviour
                         {
                             Cell cell = cells[x, y];
                             Transform pos = cell.gameObject.transform;
-                            GameObject m_chess = Instantiate(chess_r, pos);
+                            GameObject m_chess = Instantiate(chess_enemy, pos);
                             ChessPiece piece = m_chess.GetComponent<ChessPiece>();
+                            piece.SetChessData(ChessType.ENEMY);
                             chessPieces.Append(piece);
 
                             cell.SetChessOnCell(piece);
@@ -126,5 +134,21 @@ public class BoardController : MonoBehaviour
                 }
             }
         }
+    }
+
+    public Cell[] GetPossibleCellToMove(ChessType type,int current_x, int current_y)
+    {
+        if (type == ChessType.ALLY)
+        {
+            Cell[] possibleCells = { cells[current_x - 1, current_y - 1], cells[current_x + 1, current_y - 1] };
+            return possibleCells;
+        } 
+        else if (type == ChessType.ENEMY) 
+        {
+            Cell[] possibleCells = { cells[current_x - 1, current_y + 1], cells[current_x + 1, current_y + 1] };
+            return possibleCells;
+        }
+
+        return null;
     }
 }

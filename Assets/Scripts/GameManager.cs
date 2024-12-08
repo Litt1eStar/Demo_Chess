@@ -6,6 +6,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
+    public BoardController board;
     [SerializeField] private Cell clickedCell;
 
     private void Awake()
