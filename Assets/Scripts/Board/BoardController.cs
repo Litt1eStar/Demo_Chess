@@ -11,13 +11,13 @@ public class BoardController : MonoBehaviour
 
     [SerializeField] private int size_x = 8, size_y = 8, row_to_generate = 2;
 
-    GameObject[,] cells;
-    GameObject[] chessPieces;
+    Cell[,] cells;
+    ChessPiece[] chessPieces;
 
     private void Awake()
     {
-        cells = new GameObject[size_x, size_y];
-        chessPieces = new GameObject[size_x + size_y];
+        cells = new Cell[size_x, size_y];
+        chessPieces = new ChessPiece[size_x + size_y];
     }
     private void Start()
     {
@@ -36,24 +36,28 @@ public class BoardController : MonoBehaviour
                     if(y % 2 == 0)
                     {
                         GameObject m_cell = Instantiate(cell_h, board_pos);
-                        cells[x, y] = m_cell;
+                        Cell cell = m_cell.GetComponent<Cell>();
+                        cells[x, y] = cell;
                     }
                     else
                     {
                         GameObject m_cell = Instantiate (cell_nh, board_pos);
-                        cells[x, y] = m_cell;
+                        Cell cell = m_cell.GetComponent<Cell>();
+                        cells[x, y] = cell;
                     }
                 }else if(x % 2 != 0)
                 {
                     if(y % 2 == 0)
                     {
                         GameObject m_cell = Instantiate(cell_nh, board_pos);
-                        cells[x, y] = m_cell;
+                        Cell cell = m_cell.GetComponent<Cell>();
+                        cells[x, y] = cell;
                     }
                     else
                     {
                         GameObject m_cell = Instantiate(cell_h, board_pos);
-                        cells[x, y] = m_cell;
+                        Cell cell = m_cell.GetComponent<Cell>();
+                        cells[x, y] = cell;
                     }
                 }
             }
@@ -76,15 +80,23 @@ public class BoardController : MonoBehaviour
                     {
                         if (y % 2 == 0 && y >= board_max - row_to_generate)
                         {
-                            Transform pos = cells[x, y].gameObject.transform;
+                            Cell cell = cells[x, y];
+                            Transform pos = cell.gameObject.transform;
                             GameObject m_chess = Instantiate(chess_y, pos);
-                            chessPieces.Append(m_chess);
+                            ChessPiece piece = m_chess.GetComponent<ChessPiece>();
+                            chessPieces.Append(piece);
+
+                            cell.SetChessOnCell(piece);
                         }
                         else if (y % 2 == 0 && y < board_min + row_to_generate)
                         {
-                            Transform pos = cells[x, y].gameObject.transform;
+                            Cell cell = cells[x, y];
+                            Transform pos = cell.gameObject.transform;
                             GameObject m_chess = Instantiate(chess_r, pos);
-                            chessPieces.Append(m_chess);
+                            ChessPiece piece = m_chess.GetComponent<ChessPiece>();
+                            chessPieces.Append(piece);
+
+                            cell.SetChessOnCell(piece);
                         }
                     }
                     //odd row
@@ -92,15 +104,23 @@ public class BoardController : MonoBehaviour
                     {
                         if (y % 2 != 0 && y >= board_max - row_to_generate)
                         {
-                            Transform pos = cells[x, y].gameObject.transform;
+                            Cell cell = cells[x, y];
+                            Transform pos = cell.gameObject.transform;
                             GameObject m_chess = Instantiate(chess_y, pos);
-                            chessPieces.Append(m_chess);
+                            ChessPiece piece = m_chess.GetComponent<ChessPiece>();
+                            chessPieces.Append(piece);
+
+                            cell.SetChessOnCell(piece);
                         }
                         else if (y % 2 != 0 && y < board_min + row_to_generate)
                         {
-                            Transform pos = cells[x, y].gameObject.transform;
+                            Cell cell = cells[x, y];
+                            Transform pos = cell.gameObject.transform;
                             GameObject m_chess = Instantiate(chess_r, pos);
-                            chessPieces.Append(m_chess);
+                            ChessPiece piece = m_chess.GetComponent<ChessPiece>();
+                            chessPieces.Append(piece);
+
+                            cell.SetChessOnCell(piece);
                         }
                     }
                 }
