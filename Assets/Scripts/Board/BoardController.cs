@@ -138,17 +138,24 @@ public class BoardController : MonoBehaviour
 
     public Cell[] GetPossibleCellToMove(ChessType type,int current_x, int current_y)
     {
-        if (type == ChessType.ALLY)
+        List<Cell> possibleCells = new List<Cell>();
+
+        int[][] moves = type == ChessType.ALLY
+            ? new int[][] { new int[] { -1, -1 }, new int[] { 1, -1 } }
+            : new int[][] { new int[] { -1, 1 }, new int[] { 1, 1 } };
+
+        foreach (var move in moves)
         {
-            Cell[] possibleCells = { cells[current_x - 1, current_y - 1], cells[current_x + 1, current_y - 1] };
-            return possibleCells;
-        } 
-        else if (type == ChessType.ENEMY) 
-        {
-            Cell[] possibleCells = { cells[current_x - 1, current_y + 1], cells[current_x + 1, current_y + 1] };
-            return possibleCells;
+            int newX = current_x + move[0];
+            int newY = current_y + move[1];
+
+            if (newX >= 0 && newX < size_x && newY >= 0 && newY < size_y)
+            {
+                possibleCells.Add(cells[newX, newY]);
+            }
         }
 
-        return null;
+        return possibleCells.ToArray();
+
     }
 }
