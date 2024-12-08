@@ -11,6 +11,7 @@ public class BoardController : MonoBehaviour
 
     [SerializeField] private int size_x = 8, size_y = 8, row_to_generate = 2;
 
+    public Cell[] highlightCells = new Cell[3];
     Cell[,] cells;
     ChessPiece[] chessPieces;
 
@@ -149,7 +150,7 @@ public class BoardController : MonoBehaviour
             int newX = current_x + move[0];
             int newY = current_y + move[1];
 
-            if (newX >= 0 && newX < size_x && newY >= 0 && newY < size_y)
+            if (newX >= 0 && newX < size_x && newY >= 0 && newY < size_y && cells[newX, newY].GetChessPiece() == null)
             {
                 possibleCells.Add(cells[newX, newY]);
             }
@@ -158,4 +159,33 @@ public class BoardController : MonoBehaviour
         return possibleCells.ToArray();
 
     }
+
+    public void InsertHighlightCell(Cell highlightCell)
+    {
+        List<Cell> tempHighlightCells = highlightCells.ToList();
+        tempHighlightCells.Add(highlightCell);
+        highlightCells = tempHighlightCells.ToArray();
+    }
+
+
+    public void StartHighlightCell()
+    {
+        foreach (Cell cell in highlightCells)
+        {
+            cell?.m_selection.SetActive(true);
+        }
+    }
+    public void ClearAllHighlightOnBoard()
+    {
+        foreach (Cell cell in highlightCells)
+        {
+            if (cell != null)
+            {
+                cell.m_selection.SetActive(false);
+            }
+        }
+
+        highlightCells = new Cell[0];
+    }
+
 }

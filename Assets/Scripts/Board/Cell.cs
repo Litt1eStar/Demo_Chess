@@ -1,27 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class Cell : MonoBehaviour,IPointerClickHandler
 {
-    [SerializeField] private GameObject m_selection;
+    public GameObject m_selection;
     [SerializeField] private ChessPiece chessOnCell;
 
-    private Cell[] possibleCellToMove = new Cell[2];
+    private Cell[] possibleCellToMove = new Cell[2];    
     private int x, y;
     public void OnPointerClick(PointerEventData eventData)
     {
+        //Set ClickedCell Data and highlight all possible cell to move
         GameManager.Instance.SetClickedCell(this);
-        Debug.Log("Current Position : x->" + x + ", y->" + y);
-
-        if (chessOnCell)
-        {
-            possibleCellToMove = GameManager.Instance.board.GetPossibleCellToMove(chessOnCell.type, x, y);
-            Debug.Log(possibleCellToMove[0].x + ", " + possibleCellToMove[0].y);
-            Debug.Log(possibleCellToMove[1].x + ", " + possibleCellToMove[1].y);
-        }
     }
     public void SetCellData(int _x, int _y)
     {
@@ -33,13 +27,34 @@ public class Cell : MonoBehaviour,IPointerClickHandler
     {
         chessOnCell = _chessOnCell;
     }
-    public void EventOnClick()
+    public void EnableSelection()
     {
         m_selection.SetActive(true);
     }
 
-    public void ClearCell()
+    public void DisableSelection()
     {
         m_selection.SetActive(false);
     }
+
+    public bool HasChessPiece()
+    {
+        return chessOnCell != null;
+    }
+
+    public ChessPiece GetChessPiece()
+    {
+        return chessOnCell;
+    }
+
+    public int GetX()
+    {
+        return x;
+    }
+
+    public int GetY()
+    {
+        return y;
+    }
+
 }

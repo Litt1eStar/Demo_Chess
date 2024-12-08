@@ -22,15 +22,44 @@ public class GameManager : MonoBehaviour
     }
     public void SetClickedCell(Cell _clickedCell)
     {
-        ClearCellData();
-        EventOnClick(_clickedCell);
+        //Disable Previous clicked cell
+        if (clickedCell != null)
+        {
+            clickedCell.DisableSelection();
+        }
+
+        //Clear All Highlight
+        board.ClearAllHighlightOnBoard();
+
+        //Highlight new clicked cell
+        clickedCell = _clickedCell;
+        clickedCell.EnableSelection();
+
+        // Highlight possible cells to move if there's a chess piece on those cell
+        if (clickedCell.HasChessPiece())
+        {
+            ChessPiece chessPiece = clickedCell.GetChessPiece();
+            Cell[] possibleCells = board.GetPossibleCellToMove(chessPiece.type, clickedCell.GetX(), clickedCell.GetY());
+
+            foreach (Cell cell in possibleCells)
+            {
+                if (cell != null)
+                {
+                    board.InsertHighlightCell(cell);
+                }
+            }
+
+            board.StartHighlightCell();
+        }
     }
+
+
 
     private void ClearCellData()
     {
         if (clickedCell != null)
         {
-            clickedCell.ClearCell();
+            clickedCell.DisableSelection();
         }
         clickedCell = null;
     }
@@ -38,6 +67,6 @@ public class GameManager : MonoBehaviour
     private void EventOnClick(Cell _clickedCell)
     {
         clickedCell = _clickedCell;
-        clickedCell.EventOnClick();
+        GameManager.Instance.board.InsertHighlightCell(clickedCell);
     }
 }
