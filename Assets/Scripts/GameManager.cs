@@ -8,7 +8,6 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private Cell clickedCell;
 
-
     private void Awake()
     {
         if (Instance != null && Instance != this) 

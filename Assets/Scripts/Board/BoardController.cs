@@ -9,7 +9,7 @@ public class BoardController : MonoBehaviour
     [SerializeField] private GameObject chess_r, chess_y;
     [SerializeField] private Transform board_pos;
 
-    [SerializeField] private int size_x = 8, size_y = 8;
+    [SerializeField] private int size_x = 8, size_y = 8, row_to_generate = 2;
 
     GameObject[,] cells;
     GameObject[] chessPieces;
@@ -69,23 +69,37 @@ public class BoardController : MonoBehaviour
         {
             for(int x = 0;x < size_x; x++)
             {
-                if(y >= board_max - 2 || y < board_min + 2)
+                if(y >= board_max - row_to_generate || y < board_min + row_to_generate)
                 {
+                    //even row
                     if (x % 2 == 0)
                     {
-                        if (y % 2 == 0)
+                        if (y % 2 == 0 && y >= board_max - row_to_generate)
                         {
                             Transform pos = cells[x, y].gameObject.transform;
                             GameObject m_chess = Instantiate(chess_y, pos);
                             chessPieces.Append(m_chess);
                         }
+                        else if (y % 2 == 0 && y < board_min + row_to_generate)
+                        {
+                            Transform pos = cells[x, y].gameObject.transform;
+                            GameObject m_chess = Instantiate(chess_r, pos);
+                            chessPieces.Append(m_chess);
+                        }
                     }
+                    //odd row
                     else if (x % 2 != 0)
                     {
-                        if (y % 2 != 0)
+                        if (y % 2 != 0 && y >= board_max - row_to_generate)
                         {
                             Transform pos = cells[x, y].gameObject.transform;
                             GameObject m_chess = Instantiate(chess_y, pos);
+                            chessPieces.Append(m_chess);
+                        }
+                        else if (y % 2 != 0 && y < board_min + row_to_generate)
+                        {
+                            Transform pos = cells[x, y].gameObject.transform;
+                            GameObject m_chess = Instantiate(chess_r, pos);
                             chessPieces.Append(m_chess);
                         }
                     }

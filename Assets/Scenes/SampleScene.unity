@@ -622,6 +622,9 @@ MonoBehaviour:
   chess_r: {fileID: 3563418147411691236, guid: a06767d0842eb7243aaba9ccf3b587c1, type: 3}
   chess_y: {fileID: 1706242061427607930, guid: 119678232867b594685f9ed3dcd8d5be, type: 3}
   board_pos: {fileID: 701805132}
+  size_x: 8
+  size_y: 8
+  row_to_generate: 2
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
