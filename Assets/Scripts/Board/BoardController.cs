@@ -195,14 +195,8 @@ public class BoardController : MonoBehaviour
     {
         //Clear Prev value
         ClearPossibleCellToMove();
-
         //Set new value
         possibleCellToMove = _possibleCellToMove;
-
-        foreach (Cell cell in possibleCellToMove)
-        {
-            Debug.Log("Possible to move | " + cell.ToString());
-        }
     }
 
     public void ClearPossibleCellToMove()

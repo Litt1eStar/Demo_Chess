@@ -2,11 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-
-public enum GameState
-{
-    
-}
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
@@ -69,26 +64,7 @@ public class GameManager : MonoBehaviour
                     board.InsertHighlightCell(cell);
                 }
             }
-
             board.StartHighlightCell();
         }
-    }
-
-
-
-
-    private void ClearCellData()
-    {
-        if (currentCell != null)
-        {
-            currentCell.DisableSelection();
-        }
-        currentCell = null;
-    }
-
-    private void EventOnClick(Cell _clickedCell)
-    {
-        currentCell = _clickedCell;
-        GameManager.Instance.board.InsertHighlightCell(currentCell);
     }
 }

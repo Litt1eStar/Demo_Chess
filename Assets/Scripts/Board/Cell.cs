@@ -9,8 +9,6 @@ public class Cell : MonoBehaviour,IPointerClickHandler
 {
     public GameObject m_selection;
     [SerializeField] private ChessPiece chessOnCell;
-
-    private Cell[] possibleCellToMove = new Cell[2];    
     private int x, y;
     public void OnPointerClick(PointerEventData eventData)
     {
@@ -68,6 +66,6 @@ public class Cell : MonoBehaviour,IPointerClickHandler
 
     public override string ToString()
     {
-        return "Position: x-> " + x + ", y-> " + y;
+        return $"Position: ({x},{y})";
     }
 }
