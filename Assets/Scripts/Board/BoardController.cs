@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,8 @@ public class BoardController : MonoBehaviour
     [SerializeField] private int size_x = 8, size_y = 8, row_to_generate = 2;
 
     public Cell[] highlightCells = new Cell[3];
+    public Cell[] possibleCellToMove = new Cell[2];
+
     Cell[,] cells;
     ChessPiece[] chessPieces;
 
@@ -150,7 +153,8 @@ public class BoardController : MonoBehaviour
             int newX = current_x + move[0];
             int newY = current_y + move[1];
 
-            if (newX >= 0 && newX < size_x && newY >= 0 && newY < size_y && cells[newX, newY].GetChessPiece() == null)
+            if (newX >= 0 && newX < size_x && newY >= 0 && newY < size_y &&
+                (cells[newX, newY].GetChessPiece() == null || cells[newX, newY].GetChessPiece().type != GameManager.Instance.CurrentCell().GetChessPiece().type))
             {
                 possibleCells.Add(cells[newX, newY]);
             }
@@ -186,6 +190,19 @@ public class BoardController : MonoBehaviour
         }
 
         highlightCells = new Cell[0];
+    }
+
+    public void SetPossibleCellToMove(Cell[] _possibleCellToMove)
+    {
+        //Clear Prev value
+        ClearPossibleCellToMove();
+        //Set new value
+        possibleCellToMove = _possibleCellToMove;
+    }
+
+    public void ClearPossibleCellToMove()
+    {
+        possibleCellToMove = new Cell[0]; // Use an empty array instead of `null`
     }
 
 }
