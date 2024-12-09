@@ -40,7 +40,6 @@ public class GameManager : MonoBehaviour
         // Case: Move to a possible cell
         if (board.possibleCellToMove.Contains(_clickedCell))
         {
-
             if (_clickedCell.GetChessPiece() != null && _clickedCell.GetChessPiece().type != currentCell.GetChessPiece().type)
             {
                 int currX = currentCell.GetX();
@@ -51,51 +50,109 @@ public class GameManager : MonoBehaviour
 
                 board.ClearAllHighlightOnBoard();
 
-                if (dir == 1)
+                switch (state)
                 {
-                    //Find Target Cell that current cell will move to
-                    Cell targetCell = board.GetCellBy(currX + 2, currY - 2);
+                    case GameState.PLAYER:
+                        if (dir == 1)
+                        {
+                            //Find Target Cell that current cell will move to
+                            Cell targetCell = board.GetCellBy(currX + 2, currY - 2);
 
-                    //If there is a piece on that cell then we can't kill
-                    if (targetCell.GetChessPiece() != null) return;
+                            //If there is a piece on that cell then we can't kill
+                            if (targetCell.GetChessPiece() != null) return;
 
-                    //Keep Temp of Chess Piece of current cell
-                    ChessPiece currChessPiece = currentCell.GetChessPiece(); 
-                    
-                    //Set chess piece data on target cell by using temp
-                    targetCell.SetChessOnCell(currChessPiece);
+                            //Keep Temp of Chess Piece of current cell
+                            ChessPiece currChessPiece = currentCell.GetChessPiece();
 
-                    //Clear Data on current cell and move chess piece to target cell
-                    currentCell.SetChessOnCell(null);
-                    currChessPiece.gameObject.transform.SetParent(targetCell.transform);
-                    currChessPiece.gameObject.GetComponent<RectTransform>().localPosition = Vector3.zero;
-                    Destroy(_clickedCell.GetChessPiece().gameObject);
-                    _clickedCell.SetChessOnCell(null);
-                    
-                    board.ClearPossibleCellToMove();
-                }
-                else if(dir == -1)
-                {
-                    //Find Target Cell that current cell will move to
-                    Cell targetCell = board.GetCellBy(currX - 2, currY - 2);
+                            //Set chess piece data on target cell by using temp
+                            targetCell.SetChessOnCell(currChessPiece);
 
-                    //If there is a piece on that cell then we can't kill
-                    if (targetCell.GetChessPiece() != null) return;
+                            //Clear Data on current cell and move chess piece to target cell
+                            currentCell.SetChessOnCell(null);
+                            currChessPiece.gameObject.transform.SetParent(targetCell.transform);
+                            currChessPiece.gameObject.GetComponent<RectTransform>().localPosition = Vector3.zero;
+                            Destroy(_clickedCell.GetChessPiece().gameObject);
+                            _clickedCell.SetChessOnCell(null);
 
-                    //Keep Temp of Chess Piece of current cell
-                    ChessPiece currChessPiece = currentCell.GetChessPiece();
+                            board.ClearPossibleCellToMove();
+                        }
+                        else if (dir == -1)
+                        {
+                            //Find Target Cell that current cell will move to
+                            Cell targetCell = board.GetCellBy(currX - 2, currY - 2);
 
-                    //Set chess piece data on target cell by using temp
-                    targetCell.SetChessOnCell(currChessPiece);
+                            //If there is a piece on that cell then we can't kill
+                            if (targetCell.GetChessPiece() != null) return;
 
-                    //Clear Data on current cell and move chess piece to target cell
-                    currentCell.SetChessOnCell(null);
-                    currChessPiece.gameObject.transform.SetParent(targetCell.transform);
-                    currChessPiece.gameObject.GetComponent<RectTransform>().localPosition = Vector3.zero;
-                    Destroy(_clickedCell.GetChessPiece().gameObject);
-                    _clickedCell.SetChessOnCell(null);
+                            //Keep Temp of Chess Piece of current cell
+                            ChessPiece currChessPiece = currentCell.GetChessPiece();
 
-                    board.ClearPossibleCellToMove();
+                            //Set chess piece data on target cell by using temp
+                            targetCell.SetChessOnCell(currChessPiece);
+
+                            //Clear Data on current cell and move chess piece to target cell
+                            currentCell.SetChessOnCell(null);
+                            currChessPiece.gameObject.transform.SetParent(targetCell.transform);
+                            currChessPiece.gameObject.GetComponent<RectTransform>().localPosition = Vector3.zero;
+                            Destroy(_clickedCell.GetChessPiece().gameObject);
+                            _clickedCell.SetChessOnCell(null);
+
+                            board.ClearPossibleCellToMove();
+                        }
+                        break;
+
+                    case GameState.ENEMY:
+                        if (dir == 1)
+                        {
+                            //Find Target Cell that current cell will move to
+                            Cell targetCell = board.GetCellBy(currX + 2, currY + 2);
+
+                            //If there is a piece on that cell then we can't kill
+                            if (targetCell.GetChessPiece() != null) return;
+
+                            //Keep Temp of Chess Piece of current cell
+                            ChessPiece currChessPiece = currentCell.GetChessPiece();
+
+                            //Set chess piece data on target cell by using temp
+                            targetCell.SetChessOnCell(currChessPiece);
+
+                            //Clear Data on current cell and move chess piece to target cell
+                            currentCell.SetChessOnCell(null);
+                            currChessPiece.gameObject.transform.SetParent(targetCell.transform);
+                            currChessPiece.gameObject.GetComponent<RectTransform>().localPosition = Vector3.zero;
+                            Destroy(_clickedCell.GetChessPiece().gameObject);
+                            _clickedCell.SetChessOnCell(null);
+
+                            board.ClearPossibleCellToMove();
+                        }
+                        else if (dir == -1)
+                        {
+                            //Find Target Cell that current cell will move to
+                            Cell targetCell = board.GetCellBy(currX - 2, currY + 2);
+
+                            //If there is a piece on that cell then we can't kill
+                            if (targetCell.GetChessPiece() != null) return;
+
+                            //Keep Temp of Chess Piece of current cell
+                            ChessPiece currChessPiece = currentCell.GetChessPiece();
+
+                            //Set chess piece data on target cell by using temp
+                            targetCell.SetChessOnCell(currChessPiece);
+
+                            //Clear Data on current cell and move chess piece to target cell
+                            currentCell.SetChessOnCell(null);
+                            currChessPiece.gameObject.transform.SetParent(targetCell.transform);
+                            currChessPiece.gameObject.GetComponent<RectTransform>().localPosition = Vector3.zero;
+                            Destroy(_clickedCell.GetChessPiece().gameObject);
+                            _clickedCell.SetChessOnCell(null);
+
+                            board.ClearPossibleCellToMove();
+                        }
+                        break;
+                    case GameState.WINNING:
+                        break;
+                    case GameState.LOSING:
+                        break;
                 }
 
                 return;
@@ -122,10 +179,31 @@ public class GameManager : MonoBehaviour
             currentCell.DisableSelection();
         }
 
+        switch (state)
+        {
+            case GameState.PLAYER:
+                if(_clickedCell.GetChessPiece().type == ChessType.ALLY)
+                {
+                    currentCell = _clickedCell;
+                    board.ClearAllHighlightOnBoard();
+                    board.InsertHighlightCell(currentCell);
+                }
+                break;
+            case GameState.ENEMY:
+                if (_clickedCell.GetChessPiece().type == ChessType.ENEMY)
+                {
+                    currentCell = _clickedCell;
+                    board.ClearAllHighlightOnBoard();
+                    board.InsertHighlightCell(currentCell);
+                }
+                break;
+            case GameState.WINNING:
+                break;
+            case GameState.LOSING:
+                break;
+        }
         // Select the new cell
-        currentCell = _clickedCell;
-        board.ClearAllHighlightOnBoard();
-        board.InsertHighlightCell(currentCell);
+
 
         // Highlight possible moves if the cell has a chess piece
         if (currentCell.HasChessPiece())
