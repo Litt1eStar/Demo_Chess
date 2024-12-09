@@ -15,7 +15,7 @@ public class Cell : MonoBehaviour,IPointerClickHandler
     public void OnPointerClick(PointerEventData eventData)
     {
         //Set ClickedCell Data and highlight all possible cell to move
-        GameManager.Instance.SetClickedCell(this);
+        GameManager.Instance.OnClicked(this);
     }
     public void SetCellData(int _x, int _y)
     {
@@ -57,4 +57,8 @@ public class Cell : MonoBehaviour,IPointerClickHandler
         return y;
     }
 
+    public override string ToString()
+    {
+        return "Position: x-> " + x + ", y-> " + y;
+    }
 }

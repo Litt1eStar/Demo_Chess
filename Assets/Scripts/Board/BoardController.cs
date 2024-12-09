@@ -12,6 +12,8 @@ public class BoardController : MonoBehaviour
     [SerializeField] private int size_x = 8, size_y = 8, row_to_generate = 2;
 
     public Cell[] highlightCells = new Cell[3];
+    public Cell[] possibleCellToMove = new Cell[2];
+
     Cell[,] cells;
     ChessPiece[] chessPieces;
 
@@ -186,6 +188,20 @@ public class BoardController : MonoBehaviour
         }
 
         highlightCells = new Cell[0];
+    }
+
+    public void SetPossibleCellToMove(Cell[] _possibleCellToMove)
+    {
+        //Clear Prev value
+        possibleCellToMove = null;
+
+        //Set new value
+        possibleCellToMove = _possibleCellToMove;
+
+        foreach (Cell cell in possibleCellToMove)
+        {
+            Debug.Log("Possible to move | " + cell.ToString());
+        }
     }
 
 }

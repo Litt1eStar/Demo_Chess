@@ -1,7 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
+public enum GameState
+{
+    
+}
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
@@ -20,8 +25,16 @@ public class GameManager : MonoBehaviour
             Instance = this;
         }
     }
-    public void SetClickedCell(Cell _clickedCell)
+    public void OnClicked(Cell _clickedCell)
     {
+        //Case: Clicked on Possible Cell to Move
+        if (board.possibleCellToMove.Contains(_clickedCell))
+        {
+            board.ClearAllHighlightOnBoard();
+            Debug.Log("Move from " + clickedCell.ToString() + " | Move to " + _clickedCell.ToString());
+            return;
+        }
+
         //Disable Previous clicked cell
         if (clickedCell != null)
         {
@@ -33,13 +46,15 @@ public class GameManager : MonoBehaviour
 
         //Highlight new clicked cell
         clickedCell = _clickedCell;
-        clickedCell.EnableSelection();
+        board.InsertHighlightCell(clickedCell);
+        //clickedCell.EnableSelection();
 
         // Highlight possible cells to move if there's a chess piece on those cell
         if (clickedCell.HasChessPiece())
         {
             ChessPiece chessPiece = clickedCell.GetChessPiece();
             Cell[] possibleCells = board.GetPossibleCellToMove(chessPiece.type, clickedCell.GetX(), clickedCell.GetY());
+            board.SetPossibleCellToMove(possibleCells);
 
             foreach (Cell cell in possibleCells)
             {
