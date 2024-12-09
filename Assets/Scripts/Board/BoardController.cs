@@ -153,7 +153,8 @@ public class BoardController : MonoBehaviour
             int newX = current_x + move[0];
             int newY = current_y + move[1];
 
-            if (newX >= 0 && newX < size_x && newY >= 0 && newY < size_y && cells[newX, newY].GetChessPiece() == null)
+            if (newX >= 0 && newX < size_x && newY >= 0 && newY < size_y &&
+                (cells[newX, newY].GetChessPiece() == null || cells[newX, newY].GetChessPiece().type != GameManager.Instance.CurrentCell().GetChessPiece().type))
             {
                 possibleCells.Add(cells[newX, newY]);
             }

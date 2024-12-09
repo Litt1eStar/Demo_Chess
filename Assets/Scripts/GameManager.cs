@@ -67,4 +67,6 @@ public class GameManager : MonoBehaviour
             board.StartHighlightCell();
         }
     }
+
+    public Cell CurrentCell() => currentCell;
 }
