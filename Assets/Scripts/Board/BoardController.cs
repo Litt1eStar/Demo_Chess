@@ -205,4 +205,6 @@ public class BoardController : MonoBehaviour
         possibleCellToMove = new Cell[0]; // Use an empty array instead of `null`
     }
 
+    public Cell GetCellBy(int x, int y) => cells[x, y];
+
 }
