@@ -75,6 +75,8 @@ public class GameManager : MonoBehaviour
                             _clickedCell.SetChessOnCell(null);
 
                             board.ClearPossibleCellToMove();
+
+                            state = GameState.ENEMY;
                         }
                         else if (dir == -1)
                         {
@@ -98,6 +100,8 @@ public class GameManager : MonoBehaviour
                             _clickedCell.SetChessOnCell(null);
 
                             board.ClearPossibleCellToMove();
+
+                            state = GameState.ENEMY;
                         }
                         break;
 
@@ -124,6 +128,8 @@ public class GameManager : MonoBehaviour
                             _clickedCell.SetChessOnCell(null);
 
                             board.ClearPossibleCellToMove();
+
+                            state = GameState.PLAYER;
                         }
                         else if (dir == -1)
                         {
@@ -147,6 +153,8 @@ public class GameManager : MonoBehaviour
                             _clickedCell.SetChessOnCell(null);
 
                             board.ClearPossibleCellToMove();
+
+                            state = GameState.PLAYER;
                         }
                         break;
                     case GameState.WINNING:
@@ -169,6 +177,9 @@ public class GameManager : MonoBehaviour
             currentCell.SetChessOnCell(null);
 
             board.ClearPossibleCellToMove();
+
+            if (state == GameState.PLAYER) state = GameState.ENEMY;
+            else if(state == GameState.ENEMY) state = GameState.PLAYER;
 
             return;
         }
