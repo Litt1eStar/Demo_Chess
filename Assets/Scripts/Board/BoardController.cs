@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -193,7 +194,7 @@ public class BoardController : MonoBehaviour
     public void SetPossibleCellToMove(Cell[] _possibleCellToMove)
     {
         //Clear Prev value
-        possibleCellToMove = null;
+        ClearPossibleCellToMove();
 
         //Set new value
         possibleCellToMove = _possibleCellToMove;
@@ -202,6 +203,11 @@ public class BoardController : MonoBehaviour
         {
             Debug.Log("Possible to move | " + cell.ToString());
         }
+    }
+
+    public void ClearPossibleCellToMove()
+    {
+        possibleCellToMove = new Cell[0]; // Use an empty array instead of `null`
     }
 
 }

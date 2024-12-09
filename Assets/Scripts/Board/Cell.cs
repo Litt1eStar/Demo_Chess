@@ -14,9 +14,18 @@ public class Cell : MonoBehaviour,IPointerClickHandler
     private int x, y;
     public void OnPointerClick(PointerEventData eventData)
     {
-        //Set ClickedCell Data and highlight all possible cell to move
+        if (HasChessPiece())
+        {
+            Debug.Log($"Cell clicked with chess piece at ({x}, {y})");
+        }
+        else
+        {
+            Debug.Log($"Empty cell clicked at ({x}, {y})");
+        }
+
         GameManager.Instance.OnClicked(this);
     }
+
     public void SetCellData(int _x, int _y)
     {
         x = _x; 
