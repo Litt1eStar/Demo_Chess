@@ -10,8 +10,14 @@ public enum ChessType
 public class ChessPiece : ChessBaseClass
 {
     public ChessType type;
+    public bool isKing = false;
     public void SetChessData(ChessType _type)
     {
         type = _type;
+    }
+
+    public void TurnToKing()
+    {
+        isKing = true;
     }
 }
