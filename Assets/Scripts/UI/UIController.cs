@@ -5,17 +5,13 @@ using UnityEngine;
 
 public class UIController : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI playerDeadTxt;
-    [SerializeField] private TextMeshProUGUI enemyDeadTxt;
-
-    //[SerializeField] private TextMeshProUGUI turnTxt;
-    [SerializeField] private Color playerColor;
-    [SerializeField] private Color enemyColor;
+    [SerializeField] private Transform playerDeadHolder;
+    [SerializeField] private Transform enemyDeadHolder;
+    [SerializeField] private GameObject m_playerPiece;
+    [SerializeField] private GameObject m_enemyPiece;
 
     private void Start()
     {
-        playerDeadTxt.text = "0";
-        enemyDeadTxt.text = "0";
     }
     private void Update()
     {
@@ -29,16 +25,15 @@ public class UIController : MonoBehaviour
             turnTxt.text = "ENEMY TURN";
         }*/
     }
-
-    public void SetPieceCountTxt(GameState _state, int amount)
+    public void UpdateDeadPiecesArea(GameState killer)
     {
-        switch (_state)
+        switch (killer)
         {
             case GameState.PLAYER:
-                playerDeadTxt.text = amount.ToString();
+                Instantiate(m_enemyPiece, playerDeadHolder);
                 break;
             case GameState.ENEMY:
-                enemyDeadTxt.text = amount.ToString();
+                Instantiate(m_playerPiece, enemyDeadHolder);
                 break;
         }
     }

@@ -92,7 +92,7 @@ public class GameManager : MonoBehaviour
                             board.ClearPossibleCellToMove();
 
                             enemyDeadPieces += 1;
-                            ui.SetPieceCountTxt(state, enemyDeadPieces);
+                            ui.UpdateDeadPiecesArea(state);
                                 
                             state = GameState.ENEMY;
                         }
@@ -120,7 +120,7 @@ public class GameManager : MonoBehaviour
                             board.ClearPossibleCellToMove();
 
                             enemyDeadPieces += 1;
-                            ui.SetPieceCountTxt(state, enemyDeadPieces);
+                            ui.UpdateDeadPiecesArea(state);
 
                             state = GameState.ENEMY;
                         }
@@ -151,7 +151,7 @@ public class GameManager : MonoBehaviour
                             board.ClearPossibleCellToMove();
 
                             playerDeadPieces += 1;
-                            ui.SetPieceCountTxt(state, playerDeadPieces);
+                            ui.UpdateDeadPiecesArea(state);
 
                             state = GameState.PLAYER;
                         }
@@ -179,7 +179,7 @@ public class GameManager : MonoBehaviour
                             board.ClearPossibleCellToMove();
 
                             playerDeadPieces += 1;
-                            ui.SetPieceCountTxt(state, playerDeadPieces);
+                            ui.UpdateDeadPiecesArea(state);
 
                             state = GameState.PLAYER;
                         }
