@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEditor.Search;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public enum GameState
 {
     PLAYER,
     ENEMY,
-    WINNING,
-    LOSING
 }
 public class GameManager : MonoBehaviour
 {
@@ -17,9 +16,12 @@ public class GameManager : MonoBehaviour
 
     public GameState state;
     public BoardController board;
+    public UIController ui;
     
     [SerializeField] private Cell currentCell;
 
+    private int playerDeadPieces = 0;
+    private int enemyDeadPieces = 0;
     private int dir; // -1 is left, 1 is right
 
     private void Awake()
@@ -33,6 +35,18 @@ public class GameManager : MonoBehaviour
             Instance = this;
         }
     }
+
+    private void Update()
+    {
+        if (playerDeadPieces >= 8 && enemyDeadPieces < playerDeadPieces)
+        {
+            SceneManager.LoadScene("EnemyWin");
+        }
+        else if (enemyDeadPieces >= 8 && playerDeadPieces < enemyDeadPieces)
+        {
+            SceneManager.LoadScene("PlayerWin");
+        }
+    }
     public void OnClicked(Cell _clickedCell)
     {
         // Case: Enemy is on clicked Cell
@@ -40,6 +54,7 @@ public class GameManager : MonoBehaviour
         // Case: Move to a possible cell
         if (board.possibleCellToMove.Contains(_clickedCell))
         {
+            //Kill
             if (_clickedCell.GetChessPiece() != null && _clickedCell.GetChessPiece().type != currentCell.GetChessPiece().type)
             {
                 int currX = currentCell.GetX();
@@ -76,6 +91,9 @@ public class GameManager : MonoBehaviour
 
                             board.ClearPossibleCellToMove();
 
+                            enemyDeadPieces += 1;
+                            ui.SetPieceCountTxt(state, enemyDeadPieces);
+                                
                             state = GameState.ENEMY;
                         }
                         else if (dir == -1)
@@ -100,6 +118,9 @@ public class GameManager : MonoBehaviour
                             _clickedCell.SetChessOnCell(null);
 
                             board.ClearPossibleCellToMove();
+
+                            enemyDeadPieces += 1;
+                            ui.SetPieceCountTxt(state, enemyDeadPieces);
 
                             state = GameState.ENEMY;
                         }
@@ -129,6 +150,9 @@ public class GameManager : MonoBehaviour
 
                             board.ClearPossibleCellToMove();
 
+                            playerDeadPieces += 1;
+                            ui.SetPieceCountTxt(state, playerDeadPieces);
+
                             state = GameState.PLAYER;
                         }
                         else if (dir == -1)
@@ -154,12 +178,11 @@ public class GameManager : MonoBehaviour
 
                             board.ClearPossibleCellToMove();
 
+                            playerDeadPieces += 1;
+                            ui.SetPieceCountTxt(state, playerDeadPieces);
+
                             state = GameState.PLAYER;
                         }
-                        break;
-                    case GameState.WINNING:
-                        break;
-                    case GameState.LOSING:
                         break;
                 }
 
@@ -207,10 +230,6 @@ public class GameManager : MonoBehaviour
                     board.ClearAllHighlightOnBoard();
                     board.InsertHighlightCell(currentCell);
                 }
-                break;
-            case GameState.WINNING:
-                break;
-            case GameState.LOSING:
                 break;
         }
         // Select the new cell
