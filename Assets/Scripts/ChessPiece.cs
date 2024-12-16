@@ -10,7 +10,6 @@ public enum ChessType
 public class ChessPiece : ChessBaseClass
 {
     public ChessType type;
-
     public void SetChessData(ChessType _type)
     {
         type = _type;

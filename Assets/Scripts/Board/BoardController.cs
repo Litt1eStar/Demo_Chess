@@ -35,23 +35,23 @@ public class BoardController : MonoBehaviour
         {
             for (int x = 0; x < size_x; x++)
             {
-                if(x % 2 == 0)
+                if(x % 2 == 0) //even
                 {
-                    if(y % 2 == 0)
+                    if(y % 2 == 0) // even
                     {
                         GameObject m_cell = Instantiate(cell_h, board_pos);
                         Cell cell = m_cell.GetComponent<Cell>();
                         cell.SetCellData(x, y);
                         cells[x, y] = cell;
                     }
-                    else
+                    else // odd
                     {
                         GameObject m_cell = Instantiate (cell_nh, board_pos);
                         Cell cell = m_cell.GetComponent<Cell>();
                         cell.SetCellData(x, y);
                         cells[x, y] = cell;
                     }
-                }else if(x % 2 != 0)
+                }else if(x % 2 != 0) //odd
                 {
                     if(y % 2 == 0)
                     {

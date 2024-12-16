@@ -66,7 +66,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: e338f0285fdc97740a002232af8f06a6, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2d9953d85a40eab4597e315e67c06103, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -89,6 +89,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_selection: {fileID: 0}
+  chessOnCell: {fileID: 0}
 --- !u!1 &3766204675187950820
 GameObject:
   m_ObjectHideFlags: 0
@@ -148,15 +149,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 1
+  m_Sprite: {fileID: -1611327486, guid: 45a948de6479d0845a051b3084d3a948, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -178,6 +179,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_selection: {fileID: 0}
+  chessOnCell: {fileID: 0}
 --- !u!1 &8981575823467273591
 GameObject:
   m_ObjectHideFlags: 0
@@ -269,3 +271,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_selection: {fileID: 534611993185888638}
+  chessOnCell: {fileID: 0}

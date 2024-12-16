@@ -89,6 +89,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_selection: {fileID: 0}
+  chessOnCell: {fileID: 0}
 --- !u!1 &8101941352927624499
 GameObject:
   m_ObjectHideFlags: 0
@@ -180,6 +181,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_selection: {fileID: 7614123135233545194}
+  chessOnCell: {fileID: 0}
 --- !u!1 &8716572776674081802
 GameObject:
   m_ObjectHideFlags: 0
@@ -246,8 +248,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 1
+  m_Sprite: {fileID: -1223430868, guid: 45a948de6479d0845a051b3084d3a948, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -269,3 +271,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_selection: {fileID: 0}
+  chessOnCell: {fileID: 0}

@@ -169,7 +169,7 @@ public class GameManager : MonoBehaviour
 
             board.ClearAllHighlightOnBoard();
 
-            ChessPiece currentChessPiece = currentCell.GetChessPiece();
+            ChessPiece currentChessPiece = currentCell.GetChessPiece(); //temp
             currentChessPiece.gameObject.transform.SetParent(_clickedCell.transform);
             currentChessPiece.gameObject.GetComponent<RectTransform>().localPosition = Vector3.zero;
 
