@@ -10,7 +10,7 @@ public class BoardController : MonoBehaviour
     [SerializeField] private GameObject chess_enemy, chess_ally;
     [SerializeField] private Transform board_pos;
 
-    [SerializeField] private int size_x = 8, size_y = 8, row_to_generate = 2;
+    public int size_x = 8, size_y = 8, row_to_generate = 2;
 
     public Cell[] highlightCells = new Cell[3];
     public Cell[] possibleCellToMove = new Cell[2];
@@ -140,69 +140,102 @@ public class BoardController : MonoBehaviour
         }
     }
 
-    public Cell[] GetPossibleCellToMove(ChessType type,int current_x, int current_y)
+    public Cell[] GetPossibleCellToMove(ChessType type, bool isKing,int current_x, int current_y)
     {
-        List<Cell> possibleCells = new List<Cell>();
-
-        int[][] moves = type == ChessType.ALLY
-            ? new int[][] { new int[] { -1, -1 }, new int[] { 1, -1 } }
-            : new int[][] { new int[] { -1, 1 }, new int[] { 1, 1 } };
-
-        foreach (var move in moves)
+        if (!isKing)
         {
-            int newX = current_x + move[0];
-            int newY = current_y + move[1];
+            List<Cell> possibleCells = new List<Cell>();
 
-            if (newX >= 0 && newX < size_x && newY >= 0 && newY < size_y &&
-                (cells[newX, newY].GetChessPiece() == null || cells[newX, newY].GetChessPiece().type != GameManager.Instance.CurrentCell().GetChessPiece().type))
+            int[][] moves = type == ChessType.ALLY
+                ? new int[][] { new int[] { -1, -1 }, new int[] { 1, -1 } }
+                : new int[][] { new int[] { -1, 1 }, new int[] { 1, 1 } };
+
+            foreach (var move in moves)
             {
-                possibleCells.Add(cells[newX, newY]);
-            }
-        }
+                int newX = current_x + move[0];
+                int newY = current_y + move[1];
 
-        return possibleCells.ToArray();
-    }
-
-    public Cell[] GetPossibleCellToMoveOfKing(int current_x, int current_y)
-    {
-        List<Cell> possibleCells = new List<Cell>();
-
-        int[][] directions = new int[][]
-        {
-        new int[] {-1, -1}, // up-left
-        new int[] { 1, -1}, // up-right
-        new int[] {-1,  1}, // down-left
-        new int[] { 1,  1}  // down-right
-        };
-
-        foreach (var direction in directions)
-        {
-            int x = current_x;
-            int y = current_y;
-
-            while (true)
-            {
-                x += direction[0];
-                y += direction[1];
-
-                if (x < 0 || x >= size_x || y < 0 || y >= size_y)
-                    break;
-
-                Cell cell = cells[x, y];
-
-                if (cell.GetChessPiece() == null)
+                if (newX >= 0 && newX < size_x && newY >= 0 && newY < size_y)
                 {
-                    possibleCells.Add(cell);
-                }
-                else
-                {
-                    break;
+                    Cell firstCell = cells[newX, newY];
+
+                    if (firstCell.GetChessPiece() == null)
+                    {
+                        possibleCells.Add(firstCell);
+                    }
+                    else if (firstCell.GetChessPiece().type != GameManager.Instance.CurrentCell().GetChessPiece().type)
+                    {
+                        int beyondX = newX + move[0];
+                        int beyondY = newY + move[1];
+
+                        if (beyondX >= 0 && beyondX < size_x && beyondY >= 0 && beyondY < size_y)
+                        {
+                            Cell beyondCell = cells[beyondX, beyondY];
+
+                            if (beyondCell.GetChessPiece() == null)
+                            {
+                                possibleCells.Add(firstCell);
+                            }
+                        }
+                    }
                 }
             }
+
+            return possibleCells.ToArray();
         }
 
-        return possibleCells.ToArray();
+        else if (isKing)
+        {
+            List<Cell> possibleCells = new List<Cell>();
+
+            int[][] directions = new int[][]
+            {
+                new int[] {-1, -1}, // up-left
+                new int[] { 1, -1}, // up-right
+                new int[] {-1,  1}, // down-left
+                new int[] { 1,  1}  // down-right
+            };
+
+            foreach (var direction in directions)
+            {
+                int x = current_x;
+                int y = current_y;
+
+                while (true)
+                {
+                    x += direction[0];
+                    y += direction[1];
+
+                    if (x < 0 || x >= size_x || y < 0 || y >= size_y)
+                        break;
+
+                    Cell cell = cells[x, y];
+
+                    if (cell.GetChessPiece() == null)
+                    {
+                        possibleCells.Add(cell);
+                    }
+                    else if (cell.GetChessPiece() != null && cell.GetChessPiece().type != GameManager.Instance.CurrentCell().GetChessPiece().type)
+                    {
+                        possibleCells.Add(cell);
+                        break;
+                    }
+                    else
+                    {
+                        break; // Stop if encountering player piece
+                    }
+                }
+            }
+
+            return possibleCells.ToArray();
+        }
+
+        else
+        {
+            return null;
+        }
     }
+
 
     public void InsertHighlightCell(Cell highlightCell)
     {
@@ -242,7 +275,7 @@ public class BoardController : MonoBehaviour
 
     public void ClearPossibleCellToMove()
     {
-        possibleCellToMove = new Cell[0]; // Use an empty array instead of `null`
+        possibleCellToMove = new Cell[0];
     }
 
     public Cell GetCellBy(int x, int y) => cells[x, y];

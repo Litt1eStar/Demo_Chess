@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +23,6 @@ public class GameManager : MonoBehaviour
 
     private int playerDeadPieces = 0;
     private int enemyDeadPieces = 0;
-    private int dir; // -1 is left, 1 is right
 
     private void Awake()
     {
@@ -49,10 +49,8 @@ public class GameManager : MonoBehaviour
     }
     public void OnClicked(Cell _clickedCell)
     {
-        // Case: Move to a possible cell
         if (board.possibleCellToMove.Contains(_clickedCell))
         {
-            // Check for "Kill" condition
             if (_clickedCell.GetChessPiece() != null && _clickedCell.GetChessPiece().type != currentCell.GetChessPiece().type)
             {
                 HandleKill(_clickedCell);
@@ -66,13 +64,11 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        // Deselect previously selected cell
         if (currentCell != null)
         {
             currentCell.DisableSelection();
         }
 
-        // Select the new cell based on the game state
         switch (state)
         {
             case GameState.PLAYER:
@@ -92,61 +88,58 @@ public class GameManager : MonoBehaviour
 
     private void HandleKill(Cell targetCell)
     {
-        int currX = currentCell.GetX();
-        int currY = currentCell.GetY();
+        ChessPiece currentChessPiece = currentCell.GetChessPiece();
 
-        dir = targetCell.GetX() > currX ? 1 : -1; // Determine direction
-        Cell killTarget = state == GameState.PLAYER
-            ? board.GetCellBy(currX + 2 * dir, currY - 2)
-            : board.GetCellBy(currX + 2 * dir, currY + 2);
+        int dirX = targetCell.GetX() - currentCell.GetX();
+        int dirY = targetCell.GetY() - currentCell.GetY();
 
-        // If the kill target cell is occupied, return
-        if (killTarget.GetChessPiece() != null) return;
+        int nextCellX = targetCell.GetX() + dirX / Math.Max(Math.Abs(dirX), 1); 
+        int nextCellY = targetCell.GetY() + dirY / Math.Max(Math.Abs(dirY), 1);
+        Cell nextCell = board.GetCellBy(nextCellX, nextCellY);
 
-        // Perform the kill and move the piece
-        ChessPiece currChessPiece = currentCell.GetChessPiece();
-        MovePieceToTarget(currChessPiece, killTarget);
+        if (targetCell.GetChessPiece() == null || targetCell.GetChessPiece().type == currentChessPiece.type)
+            return;
 
-        // Destroy the enemy piece
         Destroy(targetCell.GetChessPiece().gameObject);
         targetCell.SetChessOnCell(null);
 
-        // Update game state
+        if (currentChessPiece.isKing)
+        {
+            if (nextCell != null && nextCell.GetChessPiece() == null)
+            {
+                MovePieceToTarget(currentChessPiece, nextCell);
+            }
+            else
+            {
+                MovePieceToTarget(currentChessPiece, targetCell); 
+            }
+        }
+        else
+        {
+            if (nextCell != null && nextCell.GetChessPiece() == null)
+            {
+                MovePieceToTarget(currentChessPiece, nextCell);
+            }
+            else
+            {
+                MovePieceToTarget(currentChessPiece, targetCell);
+            }
+        }
+
         if (state == GameState.PLAYER)
         {
             enemyDeadPieces++;
             ui.UpdateDeadPiecesArea(state);
-            state = GameState.ENEMY;
         }
         else
         {
             playerDeadPieces++;
             ui.UpdateDeadPiecesArea(state);
-            state = GameState.PLAYER;
         }
 
         board.ClearPossibleCellToMove();
         board.ClearAllHighlightOnBoard();
-    }
-
-    private void MovePiece(Cell targetCell)
-    {
-        ChessPiece currentChessPiece = currentCell.GetChessPiece(); // Temp reference
-        MovePieceToTarget(currentChessPiece, targetCell);
-
-        board.ClearPossibleCellToMove();
-        board.ClearAllHighlightOnBoard();
-    }
-
-    private void MovePieceToTarget(ChessPiece piece, Cell targetCell)
-    {
-        // Move the piece to the new cell
-        piece.gameObject.transform.SetParent(targetCell.transform);
-        piece.gameObject.GetComponent<RectTransform>().localPosition = Vector3.zero;
-
-        // Update cell data
-        targetCell.SetChessOnCell(piece);
-        currentCell.SetChessOnCell(null);
+        SwitchTurn();
     }
 
     private void SelectCell(Cell cell)
@@ -158,7 +151,7 @@ public class GameManager : MonoBehaviour
         if (currentCell.HasChessPiece())
         {
             ChessPiece chessPiece = currentCell.GetChessPiece();
-            Cell[] possibleCells = board.GetPossibleCellToMove(chessPiece.type, currentCell.GetX(), currentCell.GetY());
+            Cell[] possibleCells = board.GetPossibleCellToMove(chessPiece.type, chessPiece.isKing, currentCell.GetX(), currentCell.GetY());
             board.SetPossibleCellToMove(possibleCells);
 
             foreach (Cell cellToHighlight in possibleCells)
@@ -170,6 +163,34 @@ public class GameManager : MonoBehaviour
             }
             board.StartHighlightCell();
         }
+    }
+
+
+
+    private void MovePiece(Cell targetCell)
+    {
+        ChessPiece currentChessPiece = currentCell.GetChessPiece(); // Temp reference
+
+        MovePieceToTarget(currentChessPiece, targetCell);
+
+        board.ClearPossibleCellToMove();
+        board.ClearAllHighlightOnBoard();
+    }
+
+    private void MovePieceToTarget(ChessPiece piece, Cell targetCell)
+    {
+        if(targetCell.GetY() == 7 || targetCell.GetY() == 0)
+        {
+            piece.TurnToKing();
+        }
+
+        // Move the piece to the new cell
+        piece.gameObject.transform.SetParent(targetCell.transform);
+        piece.gameObject.GetComponent<RectTransform>().localPosition = Vector3.zero;
+
+        // Update cell data
+        targetCell.SetChessOnCell(piece);
+        currentCell.SetChessOnCell(null);
     }
 
     private void SwitchTurn()
