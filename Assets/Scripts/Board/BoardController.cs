@@ -161,7 +161,47 @@ public class BoardController : MonoBehaviour
         }
 
         return possibleCells.ToArray();
+    }
 
+    public Cell[] GetPossibleCellToMoveOfKing(int current_x, int current_y)
+    {
+        List<Cell> possibleCells = new List<Cell>();
+
+        int[][] directions = new int[][]
+        {
+        new int[] {-1, -1}, // up-left
+        new int[] { 1, -1}, // up-right
+        new int[] {-1,  1}, // down-left
+        new int[] { 1,  1}  // down-right
+        };
+
+        foreach (var direction in directions)
+        {
+            int x = current_x;
+            int y = current_y;
+
+            while (true)
+            {
+                x += direction[0];
+                y += direction[1];
+
+                if (x < 0 || x >= size_x || y < 0 || y >= size_y)
+                    break;
+
+                Cell cell = cells[x, y];
+
+                if (cell.GetChessPiece() == null)
+                {
+                    possibleCells.Add(cell);
+                }
+                else
+                {
+                    break;
+                }
+            }
+        }
+
+        return possibleCells.ToArray();
     }
 
     public void InsertHighlightCell(Cell highlightCell)
