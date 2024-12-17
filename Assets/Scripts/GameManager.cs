@@ -94,12 +94,12 @@ public class GameManager : MonoBehaviour
         int dirX = targetCell.GetX() - currentCell.GetX();
         int dirY = targetCell.GetY() - currentCell.GetY();
 
+        //Clamp value to not more than 1
         int nextCellX = targetCell.GetX() + dirX / Math.Max(Math.Abs(dirX), 1); 
         int nextCellY = targetCell.GetY() + dirY / Math.Max(Math.Abs(dirY), 1);
         Cell nextCell = board.GetCellBy(nextCellX, nextCellY);
 
-        if (targetCell.GetChessPiece() == null || targetCell.GetChessPiece().type == currentChessPiece.type)
-            return;
+        if (targetCell.GetChessPiece() == null || targetCell.GetChessPiece().type == currentChessPiece.type) return;
 
         Destroy(targetCell.GetChessPiece().gameObject);
         targetCell.SetChessOnCell(null);
@@ -137,6 +137,19 @@ public class GameManager : MonoBehaviour
             playerDeadPieces++;
             ui.UpdateDeadPiecesArea(state);
         }
+
+        //Get Killable Cell
+        currentCell = nextCell;
+        Cell[] newPossibleCellToMove = board.GetPossibleCellToMove(currentChessPiece.type, currentChessPiece.isKing, nextCellX, nextCellY);
+        Cell[] possibleCellToKill = board.GetKillablePieceFromPossibleCellToMove(newPossibleCellToMove);
+        foreach (Cell item in possibleCellToKill)
+        {
+            if (item != null)
+            {
+                Debug.Log("Killable Cell : " + item.ToString());
+            }
+        }
+        //
 
         board.ClearPossibleCellToMove();
         board.ClearAllHighlightOnBoard();

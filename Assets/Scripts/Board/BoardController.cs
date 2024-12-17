@@ -236,7 +236,20 @@ public class BoardController : MonoBehaviour
         }
     }
 
+    public Cell[] GetKillablePieceFromPossibleCellToMove(Cell[] _possibleCellToMove)
+    {
+        List<Cell> killableCells = new List<Cell>();
 
+        foreach (Cell cell in _possibleCellToMove)
+        {
+            if(cell.GetChessPiece() != null)
+            {
+                killableCells.Add(cell);
+            }
+        }
+
+        return killableCells.ToArray();
+    }
     public void InsertHighlightCell(Cell highlightCell)
     {
         List<Cell> tempHighlightCells = highlightCells.ToList();
