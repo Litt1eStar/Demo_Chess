@@ -19,6 +19,9 @@ public class GameManager : MonoBehaviour
     public BoardController board;
     public UIController ui;
     public TimeController timeController;
+    public SkillManager skill;
+
+    public int currentKillStreak = 0;
     
     [SerializeField] private Cell currentCell;
 
@@ -103,6 +106,9 @@ public class GameManager : MonoBehaviour
 
         Destroy(targetCell.GetChessPiece().gameObject);
         targetCell.SetChessOnCell(null);
+        currentKillStreak += 1;
+
+        if (currentKillStreak == 2) skill.IncreaseFreezeQuota(state);
 
         if (currentChessPiece.isKing)
         {
@@ -221,6 +227,7 @@ public class GameManager : MonoBehaviour
 
     private void SwitchTurn()
     {
+        currentKillStreak = 0;
         state = state == GameState.PLAYER ? GameState.ENEMY : GameState.PLAYER;
     }
 
