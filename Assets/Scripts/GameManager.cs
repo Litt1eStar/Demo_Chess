@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
     public GameState state;
     public BoardController board;
     public UIController ui;
+    public TimeController timeController;
     
     [SerializeField] private Cell currentCell;
 
