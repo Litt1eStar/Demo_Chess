@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class UIController : MonoBehaviour
 {
+
+    public TextMeshProUGUI killTxt;
+
     [SerializeField] private Transform playerDeadHolder;
     [SerializeField] private Transform enemyDeadHolder;
     [SerializeField] private GameObject m_playerPiece;
@@ -16,6 +19,8 @@ public class UIController : MonoBehaviour
     private void Update()
     {
         GameState state = GameManager.Instance.state;
+    
+        killTxt.text = GameManager.Instance.currentKillStreak.ToString();
 /*
         if(state == GameState.PLAYER)
         {

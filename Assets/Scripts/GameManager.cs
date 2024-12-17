@@ -18,7 +18,13 @@ public class GameManager : MonoBehaviour
     public GameState state;
     public BoardController board;
     public UIController ui;
-    
+    public TimeController timeController;
+    public SkillManager skill;
+
+    public bool isUsingFreeze;
+    public int currentKillStreak = 0;
+
+    public Cell freezeCell;
     [SerializeField] private Cell currentCell;
 
     private int playerDeadPieces = 0;
@@ -49,6 +55,33 @@ public class GameManager : MonoBehaviour
     }
     public void OnClicked(Cell _clickedCell)
     {
+        if (isUsingFreeze)
+        {
+            switch (state)
+            {
+                case GameState.PLAYER:
+                    // Allow selecting only enemy pieces to freeze
+                    if (_clickedCell.GetChessPiece()?.type == ChessType.ENEMY)
+                    {
+                        FreezePiece(_clickedCell);
+                        isUsingFreeze = false; // Reset freeze state
+                    }
+                    break;
+
+                case GameState.ENEMY:
+                    // Allow selecting only player pieces to freeze
+                    if (_clickedCell.GetChessPiece()?.type == ChessType.ALLY)
+                    {
+                        FreezePiece(_clickedCell);
+                        isUsingFreeze = false; // Reset freeze state
+                    }
+                    break;
+            }
+            return;
+        }
+
+
+        // Normal Logic for Movement and Selection
         if (board.possibleCellToMove.Contains(_clickedCell))
         {
             if (_clickedCell.GetChessPiece() != null && _clickedCell.GetChessPiece().type != currentCell.GetChessPiece().type)
@@ -60,31 +93,34 @@ public class GameManager : MonoBehaviour
                 MovePiece(_clickedCell);
                 SwitchTurn();
             }
-
             return;
         }
 
+        // Deselect current cell if necessary
         if (currentCell != null)
         {
             currentCell.DisableSelection();
         }
 
+        // Standard Piece Selection Logic
         switch (state)
         {
             case GameState.PLAYER:
-                if (_clickedCell.GetChessPiece()?.type == ChessType.ALLY)
+                if (_clickedCell.GetChessPiece()?.type == ChessType.ALLY && _clickedCell.GetChessPiece().IsFrozenThisTurn() == false)
                 {
                     SelectCell(_clickedCell);
                 }
                 break;
+
             case GameState.ENEMY:
-                if (_clickedCell.GetChessPiece()?.type == ChessType.ENEMY)
+                if (_clickedCell.GetChessPiece()?.type == ChessType.ENEMY && _clickedCell.GetChessPiece().IsFrozenThisTurn() == false)
                 {
                     SelectCell(_clickedCell);
                 }
                 break;
         }
     }
+
 
     private void HandleKill(Cell targetCell)
     {
@@ -93,15 +129,18 @@ public class GameManager : MonoBehaviour
         int dirX = targetCell.GetX() - currentCell.GetX();
         int dirY = targetCell.GetY() - currentCell.GetY();
 
+        //Clamp value to not more than 1
         int nextCellX = targetCell.GetX() + dirX / Math.Max(Math.Abs(dirX), 1); 
         int nextCellY = targetCell.GetY() + dirY / Math.Max(Math.Abs(dirY), 1);
         Cell nextCell = board.GetCellBy(nextCellX, nextCellY);
 
-        if (targetCell.GetChessPiece() == null || targetCell.GetChessPiece().type == currentChessPiece.type)
-            return;
+        if (targetCell.GetChessPiece() == null || targetCell.GetChessPiece().type == currentChessPiece.type) return;
 
         Destroy(targetCell.GetChessPiece().gameObject);
         targetCell.SetChessOnCell(null);
+        currentKillStreak += 1;
+
+        if (currentKillStreak == 2) skill.IncreaseFreezeQuota(state);
 
         if (currentChessPiece.isKing)
         {
@@ -111,7 +150,7 @@ public class GameManager : MonoBehaviour
             }
             else
             {
-                MovePieceToTarget(currentChessPiece, targetCell); 
+                MovePieceToTarget(currentChessPiece, nextCell); 
             }
         }
         else
@@ -137,9 +176,34 @@ public class GameManager : MonoBehaviour
             ui.UpdateDeadPiecesArea(state);
         }
 
+        //Get Killable Cell
+        currentCell = nextCell;
+        Cell[] newPossibleCellToMove = board.GetPossibleCellToMove(currentChessPiece.type, currentChessPiece.isKing, nextCellX, nextCellY);
+        Cell[] possibleCellToKill = board.GetKillablePieceFromPossibleCellToMove(newPossibleCellToMove);
+
         board.ClearPossibleCellToMove();
         board.ClearAllHighlightOnBoard();
-        SwitchTurn();
+
+        if(possibleCellToKill.Length > 0)
+        {
+            Debug.Log(possibleCellToKill.Length);
+            board.SetPossibleCellToMove(possibleCellToKill);
+            foreach (Cell cellToHighlight in possibleCellToKill)
+            {
+                if (cellToHighlight != null)
+                {
+                    Debug.Log("Insert Highlight Cell");
+                    board.InsertHighlightCell(cellToHighlight);
+                }
+            }
+            board.StartHighlightCell();
+        }
+        else
+        {
+            board.ClearPossibleCellToMove();
+            board.ClearAllHighlightOnBoard();
+            SwitchTurn();
+        }
     }
 
     private void SelectCell(Cell cell)
@@ -165,6 +229,15 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void FreezePiece(Cell targetCell)
+    {
+        if (targetCell != null && targetCell.HasChessPiece())
+        {
+            targetCell.GetChessPiece().FreezePiece();
+            Debug.Log("Piece Frozen at: " + targetCell.GetX() + ", " + targetCell.GetY());
+            board.ClearAllHighlightOnBoard();
+        }
+    }
 
 
     private void MovePiece(Cell targetCell)
@@ -195,8 +268,26 @@ public class GameManager : MonoBehaviour
 
     private void SwitchTurn()
     {
+        currentKillStreak = 0;
+
+        // Unfreeze all frozen pieces at the end of each turn
+        foreach (var cell in board.GetAllCells())
+        {
+            if (cell.HasChessPiece())
+            {
+                ChessPiece chessPiece = cell.GetChessPiece();
+                if (chessPiece.IsFrozenThisTurn())
+                {
+                    chessPiece.UnfreezePiece();
+                }
+            }
+        }
+
+        // Switch turns
         state = state == GameState.PLAYER ? GameState.ENEMY : GameState.PLAYER;
     }
+
+
 
 
     public Cell CurrentCell() => currentCell;

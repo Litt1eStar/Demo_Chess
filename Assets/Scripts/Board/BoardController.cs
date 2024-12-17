@@ -29,6 +29,7 @@ public class BoardController : MonoBehaviour
         InitChess(size_x, size_y);
     }
 
+    public Cell[,] GetAllCells() => cells;
     void InitBoard(int size_x, int size_y)
     {
         for (int y = 0; y < size_y; y++)
@@ -140,12 +141,12 @@ public class BoardController : MonoBehaviour
         }
     }
 
-    public Cell[] GetPossibleCellToMove(ChessType type, bool isKing,int current_x, int current_y)
+    public Cell[] GetPossibleCellToMove(ChessType type, bool isKing, int current_x, int current_y)
     {
+        List<Cell> possibleCells = new List<Cell>();
+
         if (!isKing)
         {
-            List<Cell> possibleCells = new List<Cell>();
-
             int[][] moves = type == ChessType.ALLY
                 ? new int[][] { new int[] { -1, -1 }, new int[] { 1, -1 } }
                 : new int[][] { new int[] { -1, 1 }, new int[] { 1, 1 } };
@@ -171,7 +172,6 @@ public class BoardController : MonoBehaviour
                         if (beyondX >= 0 && beyondX < size_x && beyondY >= 0 && beyondY < size_y)
                         {
                             Cell beyondCell = cells[beyondX, beyondY];
-
                             if (beyondCell.GetChessPiece() == null)
                             {
                                 possibleCells.Add(firstCell);
@@ -180,20 +180,15 @@ public class BoardController : MonoBehaviour
                     }
                 }
             }
-
-            return possibleCells.ToArray();
         }
-
-        else if (isKing)
+        else
         {
-            List<Cell> possibleCells = new List<Cell>();
-
             int[][] directions = new int[][]
             {
-                new int[] {-1, -1}, // up-left
-                new int[] { 1, -1}, // up-right
-                new int[] {-1,  1}, // down-left
-                new int[] { 1,  1}  // down-right
+            new int[] {-1, -1}, // up-left
+            new int[] { 1, -1}, // up-right
+            new int[] {-1,  1}, // down-left
+            new int[] { 1,  1}  // down-right
             };
 
             foreach (var direction in directions)
@@ -209,34 +204,53 @@ public class BoardController : MonoBehaviour
                     if (x < 0 || x >= size_x || y < 0 || y >= size_y)
                         break;
 
-                    Cell cell = cells[x, y];
+                    Cell currentCell = cells[x, y];
 
-                    if (cell.GetChessPiece() == null)
+                    if (currentCell.GetChessPiece() == null)
                     {
-                        possibleCells.Add(cell);
+                        possibleCells.Add(currentCell);
                     }
-                    else if (cell.GetChessPiece() != null && cell.GetChessPiece().type != GameManager.Instance.CurrentCell().GetChessPiece().type)
+                    else if (currentCell.GetChessPiece().type != GameManager.Instance.CurrentCell().GetChessPiece().type)
                     {
-                        possibleCells.Add(cell);
-                        break;
+                        int beyondX = x + direction[0];
+                        int beyondY = y + direction[1];
+
+                        if (beyondX >= 0 && beyondX < size_x && beyondY >= 0 && beyondY < size_y)
+                        {
+                            Cell beyondCell = cells[beyondX, beyondY];
+                            if (beyondCell.GetChessPiece() == null)
+                            {
+                                possibleCells.Add(currentCell);
+                            }
+                        }
+                        break; // Stop after finding an enemy piece
                     }
                     else
                     {
-                        break; // Stop if encountering player piece
+                        break; // Stop if encountering own piece
                     }
                 }
             }
-
-            return possibleCells.ToArray();
         }
 
-        else
-        {
-            return null;
-        }
+        return possibleCells.ToArray();
     }
 
 
+    public Cell[] GetKillablePieceFromPossibleCellToMove(Cell[] _possibleCellToMove)
+    {
+        List<Cell> killableCells = new List<Cell>();
+
+        foreach (Cell cell in _possibleCellToMove)
+        {
+            if(cell.GetChessPiece() != null)
+            {
+                killableCells.Add(cell);
+            }
+        }
+
+        return killableCells.ToArray();
+    }
     public void InsertHighlightCell(Cell highlightCell)
     {
         List<Cell> tempHighlightCells = highlightCells.ToList();

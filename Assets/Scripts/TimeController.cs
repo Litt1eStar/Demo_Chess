@@ -64,19 +64,31 @@ public class TimeController : MonoBehaviour
         switch (_state)
         {
             case GameState.PLAYER:
-                minutes = Mathf.FloorToInt(playerTimer / 60);
-                seconds = Mathf.FloorToInt(playerTimer % 60);
-                playerTimerTxt.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+                UpdatePlayerTimerTxt();
                 break;
             case GameState.ENEMY:
-                minutes = Mathf.FloorToInt(enemyTimer / 60);
-                seconds = Mathf.FloorToInt(enemyTimer % 60);
-                enemyTimerTxt.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+                UpdateEnemyTimerTxt();
                 break;
             default:
                 break;
         }
 
+    }
+
+    void UpdatePlayerTimerTxt()
+    {
+        int minutes, seconds;
+        minutes = Mathf.FloorToInt(playerTimer / 60);
+        seconds = Mathf.FloorToInt(playerTimer % 60);
+        playerTimerTxt.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+    }
+
+    void UpdateEnemyTimerTxt()
+    {
+        int minutes, seconds;
+        minutes = Mathf.FloorToInt(enemyTimer / 60);
+        seconds = Mathf.FloorToInt(enemyTimer % 60);
+        enemyTimerTxt.text = string.Format("{0:00}:{1:00}", minutes, seconds);
     }
 
     void TimerEnded(GameState winner)
@@ -88,6 +100,21 @@ public class TimeController : MonoBehaviour
                 break;
             case GameState.ENEMY:
                 SceneManager.LoadScene("EnemyWin");
+                break;
+        }
+    }
+
+    public void IncreaseTime(GameState target, int second)
+    {
+        switch (target) 
+        {
+            case GameState.PLAYER:
+                playerTimer += second;
+                UpdatePlayerTimerTxt();
+                break;
+            case GameState.ENEMY:
+                enemyTimer += second;
+                UpdateEnemyTimerTxt();
                 break;
         }
     }
