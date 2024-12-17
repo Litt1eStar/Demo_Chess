@@ -29,6 +29,7 @@ public class BoardController : MonoBehaviour
         InitChess(size_x, size_y);
     }
 
+    public Cell[,] GetAllCells() => cells;
     void InitBoard(int size_x, int size_y)
     {
         for (int y = 0; y < size_y; y++)
