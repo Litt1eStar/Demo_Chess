@@ -112,7 +112,7 @@ public class GameManager : MonoBehaviour
             }
             else
             {
-                MovePieceToTarget(currentChessPiece, targetCell); 
+                MovePieceToTarget(currentChessPiece, nextCell); 
             }
         }
         else
