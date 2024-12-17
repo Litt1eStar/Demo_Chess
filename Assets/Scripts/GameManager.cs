@@ -142,18 +142,30 @@ public class GameManager : MonoBehaviour
         currentCell = nextCell;
         Cell[] newPossibleCellToMove = board.GetPossibleCellToMove(currentChessPiece.type, currentChessPiece.isKing, nextCellX, nextCellY);
         Cell[] possibleCellToKill = board.GetKillablePieceFromPossibleCellToMove(newPossibleCellToMove);
-        foreach (Cell item in possibleCellToKill)
-        {
-            if (item != null)
-            {
-                Debug.Log("Killable Cell : " + item.ToString());
-            }
-        }
-        //
 
         board.ClearPossibleCellToMove();
         board.ClearAllHighlightOnBoard();
-        SwitchTurn();
+
+        if(possibleCellToKill.Length > 0)
+        {
+            Debug.Log(possibleCellToKill.Length);
+            board.SetPossibleCellToMove(possibleCellToKill);
+            foreach (Cell cellToHighlight in possibleCellToKill)
+            {
+                if (cellToHighlight != null)
+                {
+                    Debug.Log("Insert Highlight Cell");
+                    board.InsertHighlightCell(cellToHighlight);
+                }
+            }
+            board.StartHighlightCell();
+        }
+        else
+        {
+            board.ClearPossibleCellToMove();
+            board.ClearAllHighlightOnBoard();
+            SwitchTurn();
+        }
     }
 
     private void SelectCell(Cell cell)
