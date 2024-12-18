@@ -11,6 +11,7 @@ public class BoardController : MonoBehaviour
     [SerializeField] private Transform board_pos;
 
     public int size_x = 8, size_y = 8, row_to_generate = 2;
+    public float generateBoardDelay = 0.05f, generateChessDelay = 0.1f;
 
     public Cell[] highlightCells = new Cell[3];
     public Cell[] possibleCellToMove = new Cell[2];
@@ -23,122 +24,114 @@ public class BoardController : MonoBehaviour
         cells = new Cell[size_x, size_y];
         chessPieces = new ChessPiece[size_x + size_y];
     }
-    private void Start()
+    private IEnumerator Start()
     {
-        InitBoard(size_x, size_y);
-        InitChess(size_x, size_y);
+        yield return StartCoroutine(InitBoardAnimated(size_x, size_y, generateBoardDelay));
+        yield return StartCoroutine(InitChessAnimated(size_x, size_y, generateChessDelay));
     }
 
+
     public Cell[,] GetAllCells() => cells;
-    void InitBoard(int size_x, int size_y)
+    IEnumerator InitBoardAnimated(int size_x, int size_y, float delay)
     {
         for (int y = 0; y < size_y; y++)
         {
             for (int x = 0; x < size_x; x++)
             {
-                if(x % 2 == 0) //even
+                GameObject m_cell;
+
+                if ((x % 2 == 0 && y % 2 == 0) || (x % 2 != 0 && y % 2 != 0))
                 {
-                    if(y % 2 == 0) // even
-                    {
-                        GameObject m_cell = Instantiate(cell_h, board_pos);
-                        Cell cell = m_cell.GetComponent<Cell>();
-                        cell.SetCellData(x, y);
-                        cells[x, y] = cell;
-                    }
-                    else // odd
-                    {
-                        GameObject m_cell = Instantiate (cell_nh, board_pos);
-                        Cell cell = m_cell.GetComponent<Cell>();
-                        cell.SetCellData(x, y);
-                        cells[x, y] = cell;
-                    }
-                }else if(x % 2 != 0) //odd
+                    m_cell = Instantiate(cell_h, board_pos);
+                }
+                else
                 {
-                    if(y % 2 == 0)
+                    m_cell = Instantiate(cell_nh, board_pos);
+                }
+
+                Cell cell = m_cell.GetComponent<Cell>();
+                cell.SetCellData(x, y);
+                cells[x, y] = cell;
+
+                // Start scaling animation
+                m_cell.transform.localScale = Vector3.zero;
+                StartCoroutine(ScaleOverTime(m_cell.transform, Vector3.zero, Vector3.one, 0.3f));
+
+                yield return new WaitForSeconds(delay); // Add delay 
+            }
+        }
+    }
+
+
+
+    IEnumerator InitChessAnimated(int size_x, int size_y, float delay)
+    {
+        int board_max = size_x;
+        int board_min = 0;
+
+        for (int y = 0; y < size_y; y++)
+        {
+            for (int x = 0; x < size_x; x++)
+            {
+                if (y >= board_max - row_to_generate || y < board_min + row_to_generate)
+                {
+                    bool shouldSpawnAlly = y >= board_max - row_to_generate && ((x % 2 == 0 && y % 2 == 0) || (x % 2 != 0 && y % 2 != 0));
+                    bool shouldSpawnEnemy = y < board_min + row_to_generate && ((x % 2 == 0 && y % 2 == 0) || (x % 2 != 0 && y % 2 != 0));
+
+                    if (shouldSpawnAlly || shouldSpawnEnemy)
                     {
-                        GameObject m_cell = Instantiate(cell_nh, board_pos);
-                        Cell cell = m_cell.GetComponent<Cell>();
-                        cell.SetCellData(x, y);
-                        cells[x, y] = cell;
-                    }
-                    else
-                    {
-                        GameObject m_cell = Instantiate(cell_h, board_pos);
-                        Cell cell = m_cell.GetComponent<Cell>();
-                        cell.SetCellData(x, y);
-                        cells[x, y] = cell;
+                        if (cells[x, y] == null)
+                        {
+                            Debug.LogError($"Cell at x={x}, y={y} is null!");
+                            continue;
+                        }
+
+                        Cell cell = cells[x, y];
+                        Transform pos = cell.gameObject.transform;
+
+                        GameObject m_chess = Instantiate(shouldSpawnAlly ? chess_ally : chess_enemy, pos);
+                        if (m_chess == null)
+                        {
+                            Debug.LogError("Failed to instantiate chess piece!");
+                            continue;
+                        }
+
+                        ChessPiece piece = m_chess.GetComponent<ChessPiece>();
+                        if (piece == null)
+                        {
+                            Debug.LogError("ChessPiece component is missing from prefab!");
+                            continue;
+                        }
+
+                        piece.SetChessData(shouldSpawnAlly ? ChessType.ALLY : ChessType.ENEMY);
+                        chessPieces.Append(piece);
+
+                        cell.SetChessOnCell(piece);
+
+                        // Animate scaling
+                        m_chess.transform.localScale = Vector3.zero;
+                        StartCoroutine(ScaleOverTime(m_chess.transform, Vector3.zero, Vector3.one, 0.3f));
+
+                        yield return new WaitForSeconds(delay);
                     }
                 }
             }
         }
     }
 
-    void InitChess(int size_x, int size_y)
+
+    IEnumerator ScaleOverTime(Transform target, Vector3 fromScale, Vector3 toScale, float duration)
     {
-        int board_max = size_x;
-        int board_min = 0;
+        float elapsedTime = 0f;
 
-        for(int y = 0;y < size_y; y++)
+        while (elapsedTime < duration)
         {
-            for(int x = 0;x < size_x; x++)
-            {
-                if(y >= board_max - row_to_generate || y < board_min + row_to_generate)
-                {
-                    //even row
-                    if (x % 2 == 0)
-                    {
-                        if (y % 2 == 0 && y >= board_max - row_to_generate)
-                        {
-                            Cell cell = cells[x, y];
-                            Transform pos = cell.gameObject.transform;
-                            GameObject m_chess = Instantiate(chess_ally, pos);
-                            ChessPiece piece = m_chess.GetComponent<ChessPiece>();
-                            piece.SetChessData(ChessType.ALLY);
-                            chessPieces.Append(piece);
-
-                            cell.SetChessOnCell(piece);
-                        }
-                        else if (y % 2 == 0 && y < board_min + row_to_generate)
-                        {
-                            Cell cell = cells[x, y];
-                            Transform pos = cell.gameObject.transform;
-                            GameObject m_chess = Instantiate(chess_enemy, pos);
-                            ChessPiece piece = m_chess.GetComponent<ChessPiece>();
-                            piece.SetChessData(ChessType.ENEMY);
-                            chessPieces.Append(piece);
-
-                            cell.SetChessOnCell(piece);
-                        }
-                    }
-                    //odd row
-                    else if (x % 2 != 0)
-                    {
-                        if (y % 2 != 0 && y >= board_max - row_to_generate)
-                        {
-                            Cell cell = cells[x, y];
-                            Transform pos = cell.gameObject.transform;
-                            GameObject m_chess = Instantiate(chess_ally, pos);
-                            ChessPiece piece = m_chess.GetComponent<ChessPiece>();
-                            piece.SetChessData(ChessType.ALLY);
-                            chessPieces.Append(piece);
-
-                            cell.SetChessOnCell(piece);
-                        }
-                        else if (y % 2 != 0 && y < board_min + row_to_generate)
-                        {
-                            Cell cell = cells[x, y];
-                            Transform pos = cell.gameObject.transform;
-                            GameObject m_chess = Instantiate(chess_enemy, pos);
-                            ChessPiece piece = m_chess.GetComponent<ChessPiece>();
-                            piece.SetChessData(ChessType.ENEMY);
-                            chessPieces.Append(piece);
-
-                            cell.SetChessOnCell(piece);
-                        }
-                    }
-                }
-            }
+            target.localScale = Vector3.Lerp(fromScale, toScale, elapsedTime / duration);
+            elapsedTime += Time.deltaTime;
+            yield return null;
         }
+
+        target.localScale = toScale;
     }
 
     public Cell[] GetPossibleCellToMove(ChessType type, bool isKing, int current_x, int current_y)
@@ -235,8 +228,6 @@ public class BoardController : MonoBehaviour
 
         return possibleCells.ToArray();
     }
-
-
     public Cell[] GetKillablePieceFromPossibleCellToMove(Cell[] _possibleCellToMove)
     {
         List<Cell> killableCells = new List<Cell>();
@@ -257,8 +248,6 @@ public class BoardController : MonoBehaviour
         tempHighlightCells.Add(highlightCell);
         highlightCells = tempHighlightCells.ToArray();
     }
-
-
     public void StartHighlightCell()
     {
         foreach (Cell cell in highlightCells)
@@ -278,7 +267,6 @@ public class BoardController : MonoBehaviour
 
         highlightCells = new Cell[0];
     }
-
     public void SetPossibleCellToMove(Cell[] _possibleCellToMove)
     {
         //Clear Prev value
