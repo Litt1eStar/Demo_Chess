@@ -20,12 +20,6 @@ public class ChessPiece : ChessBaseClass
     [SerializeField] private Color frozenColor;
     [SerializeField] private Color normalColor;
 
-    private void Start()
-    {
-        chessImage.color = normalColor;
-        chessImage.sprite = sprite;
-    }
-
     public void SetChessData(ChessType _type)
     {
         type = _type;
