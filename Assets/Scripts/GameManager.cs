@@ -60,20 +60,18 @@ public class GameManager : MonoBehaviour
             switch (state)
             {
                 case GameState.PLAYER:
-                    // Allow selecting only enemy pieces to freeze
                     if (_clickedCell.GetChessPiece()?.type == ChessType.ENEMY)
                     {
                         FreezePiece(_clickedCell);
-                        isUsingFreeze = false; // Reset freeze state
+                        isUsingFreeze = false;
                     }
                     break;
 
                 case GameState.ENEMY:
-                    // Allow selecting only player pieces to freeze
                     if (_clickedCell.GetChessPiece()?.type == ChessType.ALLY)
                     {
                         FreezePiece(_clickedCell);
-                        isUsingFreeze = false; // Reset freeze state
+                        isUsingFreeze = false;
                     }
                     break;
             }
@@ -94,12 +92,6 @@ public class GameManager : MonoBehaviour
                 SwitchTurn();
             }
             return;
-        }
-
-        // Deselect current cell if necessary
-        if (currentCell != null)
-        {
-            currentCell.DisableSelection();
         }
 
         // Standard Piece Selection Logic
@@ -148,10 +140,10 @@ public class GameManager : MonoBehaviour
             {
                 MovePieceToTarget(currentChessPiece, nextCell);
             }
-            else
+            /*else
             {
                 MovePieceToTarget(currentChessPiece, nextCell); 
-            }
+            }*/
         }
         else
         {
@@ -257,11 +249,9 @@ public class GameManager : MonoBehaviour
             piece.TurnToKing();
         }
 
-        // Move the piece to the new cell
         piece.gameObject.transform.SetParent(targetCell.transform);
         piece.gameObject.GetComponent<RectTransform>().localPosition = Vector3.zero;
 
-        // Update cell data
         targetCell.SetChessOnCell(piece);
         currentCell.SetChessOnCell(null);
     }
