@@ -31,7 +31,9 @@ public class ChessPiece : ChessBaseClass
         if (chessImage != null) 
         {
             chessImage.sprite = null;
-            chessImage.sprite = kingSprite; 
+            chessImage.sprite = kingSprite;
+
+            AudioManager.Instance.PlaySFX(AudioManager.Instance.king);
         }
         isKing = true;
     }

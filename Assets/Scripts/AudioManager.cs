@@ -2,15 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AudioController : MonoBehaviour
+public class AudioManager : MonoBehaviour
 {
-    public static AudioController Instance { get; private set; }
+    public static AudioManager Instance { get; private set; }
 
     [SerializeField] private AudioSource musicSource, sfxSource;
 
     public AudioClip background;
     public AudioClip pieceWalk;
     public AudioClip pieceKill;
+    public AudioClip king;
+    public AudioClip iceSkill;
+    public AudioClip timeSkill;
     private void Awake()
     {
         if (Instance != null && Instance != this)

@@ -443,7 +443,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0.15
+  m_Volume: 0.064
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -2142,8 +2142,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerDeadHolder: {fileID: 802758923}
   enemyDeadHolder: {fileID: 1166573003}
-  m_playerPiece: {fileID: 1706242061427607930, guid: 119678232867b594685f9ed3dcd8d5be, type: 3}
-  m_enemyPiece: {fileID: 3563418147411691236, guid: a06767d0842eb7243aaba9ccf3b587c1, type: 3}
+  m_playerPiece: {fileID: 3074636328319611495, guid: 6a17eea654b025e4094653866f10070f, type: 3}
+  m_enemyPiece: {fileID: 4062464875218514594, guid: c29d2e46e9032744da991a46df22315b, type: 3}
 --- !u!4 &1165131213
 Transform:
   m_ObjectHideFlags: 0
@@ -3027,7 +3027,10 @@ MonoBehaviour:
   sfxSource: {fileID: 932179534}
   background: {fileID: 8300000, guid: 1d53b7dda3e3a864481acba9f949288c, type: 3}
   pieceWalk: {fileID: 8300000, guid: a8a51091501046d4289d60419b25f7c5, type: 3}
-  pieceKill: {fileID: 8300000, guid: a8a51091501046d4289d60419b25f7c5, type: 3}
+  pieceKill: {fileID: 8300000, guid: 4a8cb4aff493b18489dc9b5717910b07, type: 3}
+  king: {fileID: 8300000, guid: e024cc43b0853114fa72aead42d244f6, type: 3}
+  iceSkill: {fileID: 8300000, guid: 18d3ee908c707d744bfde505109517c3, type: 3}
+  timeSkill: {fileID: 8300000, guid: b1160f1c28ec78149ac0acb32f11c150, type: 3}
 --- !u!4 &1652791451
 Transform:
   m_ObjectHideFlags: 0

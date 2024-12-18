@@ -38,6 +38,7 @@ public class IncreaseTime : MonoBehaviour
     void AddTime(int second = 10)
     {
         GameManager.Instance.timeController.IncreaseTime(state, second);
+        AudioManager.Instance.PlaySFX(AudioManager.Instance.timeSkill);
     }
 
     IEnumerator CooldownRoutine()

@@ -41,6 +41,7 @@ public class Freeze : MonoBehaviour
     {
         quotaLeft--;
         GameManager.Instance.isUsingFreeze = true;
+        AudioManager.Instance.PlaySFX(AudioManager.Instance.iceSkill);
     }
 
     public void IncreaseQuota() => quotaLeft++;
