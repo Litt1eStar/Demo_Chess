@@ -130,6 +130,7 @@ public class GameManager : MonoBehaviour
 
         Destroy(targetCell.GetChessPiece().gameObject);
         targetCell.SetChessOnCell(null);
+        AudioController.Instance.PlaySFX(AudioController.Instance.pieceKill);
         currentKillStreak += 1;
 
         if (currentKillStreak == 2) skill.IncreaseFreezeQuota(state);
@@ -251,6 +252,8 @@ public class GameManager : MonoBehaviour
 
         piece.gameObject.transform.SetParent(targetCell.transform);
         piece.gameObject.GetComponent<RectTransform>().localPosition = Vector3.zero;
+
+        AudioController.Instance.PlaySFX(AudioController.Instance.pieceWalk);
 
         targetCell.SetChessOnCell(piece);
         currentCell.SetChessOnCell(null);

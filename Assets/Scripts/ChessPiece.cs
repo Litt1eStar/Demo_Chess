@@ -16,7 +16,8 @@ public class ChessPiece : ChessBaseClass
     private int frozenTurnsRemaining = 0; // Counter for frozen turns
 
     [SerializeField] private Image chessImage;
-    [SerializeField] private Sprite sprite;
+    [SerializeField] private Sprite checkerSprite;
+    [SerializeField] private Sprite kingSprite;
     [SerializeField] private Color frozenColor;
     [SerializeField] private Color normalColor;
 
@@ -27,13 +28,18 @@ public class ChessPiece : ChessBaseClass
 
     public void TurnToKing()
     {
+        if (chessImage != null) 
+        {
+            chessImage.sprite = null;
+            chessImage.sprite = kingSprite; 
+        }
         isKing = true;
     }
 
     public void FreezePiece()
     {
         isFrozen = true;
-        frozenTurnsRemaining = 2; // Set to 1 turn of freezing
+        frozenTurnsRemaining = 2;
         chessImage.color = frozenColor;
     }
 
@@ -41,10 +47,10 @@ public class ChessPiece : ChessBaseClass
     {
         if (frozenTurnsRemaining <= 0) return;
 
-        frozenTurnsRemaining--;  // Decrease frozen turn count
+        frozenTurnsRemaining--; 
         if (frozenTurnsRemaining <= 0)
         {
-            isFrozen = false;  // Unfreeze when count reaches 0
+            isFrozen = false;
             chessImage.color = normalColor;
         }
     }

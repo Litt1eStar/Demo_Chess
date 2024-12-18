@@ -53,7 +53,8 @@ MonoBehaviour:
   type: 0
   isKing: 0
   chessImage: {fileID: 4756839908912001539}
-  sprite: {fileID: 21300000, guid: a89afd6d43410c040a51c1a92b80c425, type: 3}
+  checkerSprite: {fileID: 21300000, guid: a89afd6d43410c040a51c1a92b80c425, type: 3}
+  kingSprite: {fileID: 21300000, guid: 881c932f568201c4ba85ad7daebedb1e, type: 3}
   frozenColor: {r: 0.23300098, g: 0.5279466, b: 0.9622642, a: 1}
   normalColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &4007886289378517661
@@ -89,7 +90,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -1.2, y: -0.5}
+  m_AnchoredPosition: {x: -1.2000122, y: -0.5}
   m_SizeDelta: {x: 6.7628, y: 6.7312}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &9051368509617945296
