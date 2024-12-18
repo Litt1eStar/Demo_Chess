@@ -396,7 +396,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86133173c15228e4a9f273cc240a465f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  countdownTimeMinute: 10
+  countdownTimeMinute: 0.03
   playerTimerTxt: {fileID: 965451762}
   enemyTimerTxt: {fileID: 2024159281}
 --- !u!4 &250741133
