@@ -7,14 +7,14 @@ public class SkillManager : MonoBehaviour
     [SerializeField] private Freeze playerFreeze;
     [SerializeField] private Freeze enemyFreeze;
 
-    public void IncreaseFreezeQuota(GameState _state)
+    public void IncreaseFreezeQuota(Turn _state)
     {
         switch (_state)
         {
-            case GameState.PLAYER:
+            case Turn.PLAYER:
                 playerFreeze.IncreaseQuota();
                 break;
-            case GameState.ENEMY:
+            case Turn.ENEMY:
                 enemyFreeze.IncreaseQuota();
                 break;
         }

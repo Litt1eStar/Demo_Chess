@@ -3,13 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using static UnityEditor.PlayerSettings;
 
 public class BoardController : MonoBehaviour
 {
+    [Header("Object Information")]
     [SerializeField] private GameObject cell_h, cell_nh;
     [SerializeField] private GameObject chess_enemy, chess_ally;
     [SerializeField] private Transform board_pos;
 
+    [Header("Board Setting")]
     public int size_x = 8, size_y = 8, row_to_generate = 2;
     public float generateBoardDelay = 0.05f, generateChessDelay = 0.1f;
 
@@ -29,97 +32,66 @@ public class BoardController : MonoBehaviour
         yield return StartCoroutine(InitBoardAnimated(size_x, size_y, generateBoardDelay));
         yield return StartCoroutine(InitChessAnimated(size_x, size_y, generateChessDelay));
     }
-
-
-    public Cell[,] GetAllCells() => cells;
     IEnumerator InitBoardAnimated(int size_x, int size_y, float delay)
     {
         for (int y = 0; y < size_y; y++)
         {
             for (int x = 0; x < size_x; x++)
             {
-                GameObject m_cell;
-
-                if ((x % 2 == 0 && y % 2 == 0) || (x % 2 != 0 && y % 2 != 0))
-                {
-                    m_cell = Instantiate(cell_h, board_pos);
-                }
-                else
-                {
-                    m_cell = Instantiate(cell_nh, board_pos);
-                }
-
+                GameObject prefab = (x % 2 == 0 && y % 2 == 0) || (x % 2 != 0 && y % 2 != 0) ? cell_h : cell_nh;
+                GameObject m_cell = Instantiate(prefab, board_pos);
                 Cell cell = m_cell.GetComponent<Cell>();
                 cell.SetCellData(x, y);
                 cells[x, y] = cell;
 
-                // Start scaling animation
                 m_cell.transform.localScale = Vector3.zero;
                 StartCoroutine(ScaleOverTime(m_cell.transform, Vector3.zero, Vector3.one, 0.3f));
 
-                yield return new WaitForSeconds(delay); // Add delay 
+                yield return new WaitForSeconds(delay);
             }
         }
     }
-
-
-
     IEnumerator InitChessAnimated(int size_x, int size_y, float delay)
     {
-        int board_max = size_x;
-        int board_min = 0;
+        for (int y = 0; y < row_to_generate; y++)
+        {
+            for(int x = 0; x < size_x; x++)
+            {
+                if((y%2==0 && x % 2 == 0) || (y%2!=0 && x%2!=0))
+                {
+                    Cell cell = cells[x, y];
+                    yield return SpawnChessPiece(cell, chess_enemy, ChessType.ENEMY, delay);
+                }
+            } 
+        }
 
-        for (int y = 0; y < size_y; y++)
+        for (int y = size_y - row_to_generate; y < size_y; y++)
         {
             for (int x = 0; x < size_x; x++)
             {
-                if (y >= board_max - row_to_generate || y < board_min + row_to_generate)
+                if ((y % 2 == 0 && x % 2 == 0) || (y % 2 != 0 && x % 2 != 0))
                 {
-                    bool shouldSpawnAlly = y >= board_max - row_to_generate && ((x % 2 == 0 && y % 2 == 0) || (x % 2 != 0 && y % 2 != 0));
-                    bool shouldSpawnEnemy = y < board_min + row_to_generate && ((x % 2 == 0 && y % 2 == 0) || (x % 2 != 0 && y % 2 != 0));
-
-                    if (shouldSpawnAlly || shouldSpawnEnemy)
-                    {
-                        if (cells[x, y] == null)
-                        {
-                            Debug.LogError($"Cell at x={x}, y={y} is null!");
-                            continue;
-                        }
-
-                        Cell cell = cells[x, y];
-                        Transform pos = cell.gameObject.transform;
-
-                        GameObject m_chess = Instantiate(shouldSpawnAlly ? chess_ally : chess_enemy, pos);
-                        if (m_chess == null)
-                        {
-                            Debug.LogError("Failed to instantiate chess piece!");
-                            continue;
-                        }
-
-                        ChessPiece piece = m_chess.GetComponent<ChessPiece>();
-                        if (piece == null)
-                        {
-                            Debug.LogError("ChessPiece component is missing from prefab!");
-                            continue;
-                        }
-
-                        piece.SetChessData(shouldSpawnAlly ? ChessType.ALLY : ChessType.ENEMY);
-                        chessPieces.Append(piece);
-
-                        cell.SetChessOnCell(piece);
-
-                        // Animate scaling
-                        m_chess.transform.localScale = Vector3.zero;
-                        StartCoroutine(ScaleOverTime(m_chess.transform, Vector3.zero, Vector3.one, 0.3f));
-
-                        yield return new WaitForSeconds(delay);
-                    }
+                    Cell cell = cells[x, y];
+                    yield return SpawnChessPiece(cell, chess_ally, ChessType.ALLY, delay);
                 }
             }
         }
     }
+    IEnumerator SpawnChessPiece(Cell cell, GameObject prefab, ChessType type, float delay)
+    {
+        GameObject m_chess = Instantiate(prefab, cell.gameObject.transform);
+        ChessPiece piece = m_chess.GetComponent<ChessPiece>();
 
+        piece.SetChessData(type);
+        chessPieces.Append(piece);
 
+        cell.SetChessOnCell(piece);
+
+        m_chess.transform.localScale = Vector3.zero;
+        StartCoroutine(ScaleOverTime(m_chess.transform, Vector3.zero, Vector3.one, 0.3f));
+
+        yield return new WaitForSeconds(delay);
+    }
     IEnumerator ScaleOverTime(Transform target, Vector3 fromScale, Vector3 toScale, float duration)
     {
         float elapsedTime = 0f;
@@ -133,7 +105,6 @@ public class BoardController : MonoBehaviour
 
         target.localScale = toScale;
     }
-
     public Cell[] GetPossibleCellToMove(ChessType type, bool isKing, int current_x, int current_y)
     {
         List<Cell> possibleCells = new List<Cell>();
@@ -195,7 +166,7 @@ public class BoardController : MonoBehaviour
                     y += direction[1];
 
                     if (x < 0 || x >= size_x || y < 0 || y >= size_y)
-                        break;
+                        break; //Stop if out of board
 
                     Cell currentCell = cells[x, y];
 
@@ -269,17 +240,14 @@ public class BoardController : MonoBehaviour
     }
     public void SetPossibleCellToMove(Cell[] _possibleCellToMove)
     {
-        //Clear Prev value
         ClearPossibleCellToMove();
-        //Set new value
         possibleCellToMove = _possibleCellToMove;
     }
-
     public void ClearPossibleCellToMove()
     {
         possibleCellToMove = new Cell[0];
     }
-
     public Cell GetCellBy(int x, int y) => cells[x, y];
+    public Cell[,] GetAllCells() => cells;
 
 }

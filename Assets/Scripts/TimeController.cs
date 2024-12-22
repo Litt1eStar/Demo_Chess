@@ -9,7 +9,7 @@ public class TimeController : MonoBehaviour
     public float countdownTimeMinute;
     private float playerTimer;
     private float enemyTimer;
-    private GameState state;
+    private Turn state;
     public TextMeshProUGUI playerTimerTxt;
     public TextMeshProUGUI enemyTimerTxt;
 
@@ -17,16 +17,16 @@ public class TimeController : MonoBehaviour
     {
         playerTimer = countdownTimeMinute * 60;
         enemyTimer = countdownTimeMinute * 60;
-        UpdateTimerDisplay(GameState.PLAYER);
-        UpdateTimerDisplay(GameState.ENEMY);
+        UpdateTimerDisplay(Turn.PLAYER);
+        UpdateTimerDisplay(Turn.ENEMY);
     }
 
     void Update()
     {
-        state = GameManager.Instance.state;
+        state = GameManager.Instance.current_turn;
         switch (state)
         {
-            case GameState.PLAYER:
+            case Turn.PLAYER:
                 if (playerTimer > 0)
                 {
                     playerTimer -= Time.deltaTime;
@@ -36,10 +36,10 @@ public class TimeController : MonoBehaviour
                 {
                     playerTimer = 0;
                     UpdateTimerDisplay(state);
-                    TimerEnded(GameState.ENEMY);
+                    TimerEnded(Turn.ENEMY);
                 }
                 break;
-            case GameState.ENEMY:
+            case Turn.ENEMY:
                 if (enemyTimer > 0)
                 {
                     enemyTimer -= Time.deltaTime;
@@ -49,7 +49,7 @@ public class TimeController : MonoBehaviour
                 {
                     enemyTimer = 0;
                     UpdateTimerDisplay(state);
-                    TimerEnded(GameState.PLAYER); 
+                    TimerEnded(Turn.PLAYER); 
                 }
                 break;
             default:
@@ -58,15 +58,14 @@ public class TimeController : MonoBehaviour
         
     }
 
-    void UpdateTimerDisplay(GameState _state)
+    void UpdateTimerDisplay(Turn _state)
     {
-        int minutes, seconds;
         switch (_state)
         {
-            case GameState.PLAYER:
+            case Turn.PLAYER:
                 UpdatePlayerTimerTxt();
                 break;
-            case GameState.ENEMY:
+            case Turn.ENEMY:
                 UpdateEnemyTimerTxt();
                 break;
             default:
@@ -91,28 +90,28 @@ public class TimeController : MonoBehaviour
         enemyTimerTxt.text = string.Format("{0:00}:{1:00}", minutes, seconds);
     }
 
-    void TimerEnded(GameState winner)
+    void TimerEnded(Turn winner)
     {
         switch (winner)
         {
-            case GameState.PLAYER:
+            case Turn.PLAYER:
                 SceneManager.LoadScene("PlayerWin");
                 break;
-            case GameState.ENEMY:
+            case Turn.ENEMY:
                 SceneManager.LoadScene("EnemyWin");
                 break;
         }
     }
 
-    public void IncreaseTime(GameState target, int second)
+    public void IncreaseTime(Turn target, int second)
     {
         switch (target) 
         {
-            case GameState.PLAYER:
+            case Turn.PLAYER:
                 playerTimer += second;
                 UpdatePlayerTimerTxt();
                 break;
-            case GameState.ENEMY:
+            case Turn.ENEMY:
                 enemyTimer += second;
                 UpdateEnemyTimerTxt();
                 break;

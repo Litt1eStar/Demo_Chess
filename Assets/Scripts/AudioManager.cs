@@ -8,6 +8,7 @@ public class AudioManager : MonoBehaviour
 
     [SerializeField] private AudioSource musicSource, sfxSource;
 
+    [Header("Sound Effect")]
     public AudioClip background;
     public AudioClip pieceWalk;
     public AudioClip pieceKill;

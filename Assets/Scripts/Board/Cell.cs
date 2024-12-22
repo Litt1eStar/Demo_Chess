@@ -12,15 +12,6 @@ public class Cell : MonoBehaviour,IPointerClickHandler
     private int x, y;
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (HasChessPiece())
-        {
-            Debug.Log($"Cell clicked with chess piece at ({x}, {y})");
-        }
-        else
-        {
-            Debug.Log($"Empty cell clicked at ({x}, {y})");
-        }
-
         GameManager.Instance.OnClicked(this);
     }
 
