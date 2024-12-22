@@ -15,7 +15,6 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
-
     [Header("Controller")]
     public BoardController board;
     public UIController ui;

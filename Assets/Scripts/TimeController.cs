@@ -60,7 +60,6 @@ public class TimeController : MonoBehaviour
 
     void UpdateTimerDisplay(Turn _state)
     {
-        int minutes, seconds;
         switch (_state)
         {
             case Turn.PLAYER:
