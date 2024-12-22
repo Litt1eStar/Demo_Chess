@@ -57,6 +57,6 @@ public class Cell : MonoBehaviour,IPointerClickHandler
 
     public override string ToString()
     {
-        return $"Position: ({x},{y})";
+        return $"{chessOnCell.chessClass.ToString()} | {chessOnCell.type.ToString()}";
     }
 }

@@ -162,8 +162,10 @@ public class GameManager : MonoBehaviour
         board.ClearAllHighlightOnBoard();
         board.InsertHighlightCell(currentCell);
 
+
         if (currentCell.HasChessPiece())
         {
+            Debug.Log(cell.ToString());
             ChessPiece chessPiece = currentCell.GetChessPiece();
             Cell[] possibleCells = board.GetPossibleCellToMove(chessPiece.type, chessPiece.isKing, currentCell.GetX(), currentCell.GetY());
             board.SetPossibleCellToMove(possibleCells);

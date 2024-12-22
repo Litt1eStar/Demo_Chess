@@ -12,6 +12,9 @@ public class BoardController : MonoBehaviour
     [SerializeField] private GameObject chess_enemy, chess_ally;
     [SerializeField] private Transform board_pos;
 
+    [SerializeField] private GameObject p_rook, p_knight, p_bishop, p_king, p_met, p_pawn;
+    [SerializeField] private GameObject e_rook, e_knight, e_bishop, e_king, e_met, e_pawn;
+
     [Header("Board Setting")]
     public int size_x = 8, size_y = 8, row_to_generate = 2;
     public float generateBoardDelay = 0.05f, generateChessDelay = 0.1f;
@@ -64,42 +67,42 @@ public class BoardController : MonoBehaviour
                     if (x == 0 || x == size_x - 1)
                     {
                         Cell cell = cells[x, y];
-                        yield return SpawnChessPiece(cell, chess_ally, ChessType.ALLY, delay, ChessClass.ROOK);
+                        yield return SpawnChessPiece(cell, e_rook, ChessType.ENEMY, delay, ChessClass.ROOK);
                     }
 
                     //horse
                     if (x == 1 || x == size_x - 2)
                     {
                         Cell cell = cells[x, y];
-                        yield return SpawnChessPiece(cell, chess_ally, ChessType.ALLY, delay, ChessClass.KNIGHT);
+                        yield return SpawnChessPiece(cell, e_knight, ChessType.ENEMY, delay, ChessClass.KNIGHT);
                     }
 
                     //kone
                     if (x == 2 || x == size_x - 3)
                     {
                         Cell cell = cells[x, y];
-                        yield return SpawnChessPiece(cell, chess_ally, ChessType.ALLY, delay, ChessClass.BISHOP);
+                        yield return SpawnChessPiece(cell, e_bishop, ChessType.ENEMY, delay, ChessClass.BISHOP);
                     }
 
                     //King
                     if (x == 4)
                     {
                         Cell cell = cells[x, y];
-                        yield return SpawnChessPiece(cell, chess_ally, ChessType.ALLY, delay, ChessClass.KING);
+                        yield return SpawnChessPiece(cell, e_king, ChessType.ENEMY, delay, ChessClass.KING);
                     }
 
                     //Med
                     if (x == 3)
                     {
                         Cell cell = cells[x, y];
-                        yield return SpawnChessPiece(cell, chess_ally, ChessType.ALLY, delay, ChessClass.MET);
+                        yield return SpawnChessPiece(cell, e_met, ChessType.ENEMY, delay, ChessClass.MET);
                     }
                 }
 
                 if(y == row_to_generate)
                 {
                     Cell cell = cells[x, y];
-                    yield return SpawnChessPiece(cell, chess_enemy, ChessType.ENEMY, delay, ChessClass.PAWN);
+                    yield return SpawnChessPiece(cell, e_pawn, ChessType.ENEMY, delay, ChessClass.PAWN);
                 }
             }
         }
@@ -115,42 +118,42 @@ public class BoardController : MonoBehaviour
                     if (x == 0 || x == size_x - 1)
                     {
                         Cell cell = cells[x, y];
-                        yield return SpawnChessPiece(cell, chess_ally, ChessType.ALLY, delay, ChessClass.ROOK);
+                        yield return SpawnChessPiece(cell, p_rook, ChessType.ALLY, delay, ChessClass.ROOK);
                     }
 
                     //horse
                     if (x == 1 || x == size_x - 2)
                     {
                         Cell cell = cells[x, y];
-                        yield return SpawnChessPiece(cell, chess_ally, ChessType.ALLY, delay, ChessClass.KNIGHT);
+                        yield return SpawnChessPiece(cell, p_knight, ChessType.ALLY, delay, ChessClass.KNIGHT);
                     }
 
                     //kone
                     if (x == 2 || x == size_x - 3)
                     {
                         Cell cell = cells[x, y];
-                        yield return SpawnChessPiece(cell, chess_ally, ChessType.ALLY, delay, ChessClass.BISHOP);
+                        yield return SpawnChessPiece(cell, p_bishop, ChessType.ALLY, delay, ChessClass.BISHOP);
                     }
 
                     //King
                     if (x == 3)
                     {
                         Cell cell = cells[x, y];
-                        yield return SpawnChessPiece(cell, chess_ally, ChessType.ALLY, delay, ChessClass.KING);
+                        yield return SpawnChessPiece(cell, p_king, ChessType.ALLY, delay, ChessClass.KING);
                     }
 
                     //Med
                     if (x == 4)
                     {
                         Cell cell = cells[x, y];
-                        yield return SpawnChessPiece(cell, chess_ally, ChessType.ALLY, delay, ChessClass.MET);
+                        yield return SpawnChessPiece(cell, p_met, ChessType.ALLY, delay, ChessClass.MET);
                     }
                 }
 
                 if (y == size_y - (row_to_generate + 1))
                 {
                     Cell cell = cells[x, y];
-                    yield return SpawnChessPiece(cell, chess_ally, ChessType.ALLY, delay, ChessClass.PAWN);
+                    yield return SpawnChessPiece(cell, p_pawn, ChessType.ALLY, delay, ChessClass.PAWN);
                 }
             }
         }

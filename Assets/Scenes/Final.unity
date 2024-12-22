@@ -2084,6 +2084,18 @@ MonoBehaviour:
   chess_enemy: {fileID: 4062464875218514594, guid: c29d2e46e9032744da991a46df22315b, type: 3}
   chess_ally: {fileID: 3074636328319611495, guid: 6a17eea654b025e4094653866f10070f, type: 3}
   board_pos: {fileID: 1701469923}
+  p_rook: {fileID: 6253286982743189603, guid: 284ddacb420c0514d8dd48d84ad8b5f0, type: 3}
+  p_knight: {fileID: 3470506546222429086, guid: c0b37b3922499284eac63680200d6543, type: 3}
+  p_bishop: {fileID: 6663731908919834195, guid: fd48c958185662e419cc68fc874f9239, type: 3}
+  p_king: {fileID: 4696596536171381940, guid: 7a8d5f1372f6f5c4e937ac66d97fd56a, type: 3}
+  p_met: {fileID: 7367993535363349032, guid: 7c83d0e1331576d489afea392d789fb1, type: 3}
+  p_pawn: {fileID: 921022715171372403, guid: 146e0c4fa5a9ac046b88b1ca0e44a3c3, type: 3}
+  e_rook: {fileID: 4402528329008796255, guid: 0bf94281b8e47f1408167b5aec73b22e, type: 3}
+  e_knight: {fileID: 7317445921818914602, guid: 1d750c73bb8c65d449a7524e65c3461a, type: 3}
+  e_bishop: {fileID: 4054600190755863286, guid: a04f0cabb31f0b64ab859ab3451b7b0e, type: 3}
+  e_king: {fileID: 3859036469307321195, guid: 314716801f1a31442bdd35ce72dddcfa, type: 3}
+  e_met: {fileID: 4063717480731900137, guid: 9d8a049809565944bbed29df9e121392, type: 3}
+  e_pawn: {fileID: 8553298368606464214, guid: 6225371d40b3e324aabc67631c006142, type: 3}
   size_x: 8
   size_y: 8
   row_to_generate: 2
@@ -2558,15 +2570,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5594c031b586d2c4eaf2cbfd9fb3276a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  state: 0
   board: {fileID: 1114383787}
   ui: {fileID: 1165131212}
   timeController: {fileID: 250741132}
   skill: {fileID: 743988872}
+  current_turn: 0
   isUsingFreeze: 0
   currentKillStreak: 0
-  freezeCell: {fileID: 0}
-  currentCell: {fileID: 0}
 --- !u!4 &1465911307
 Transform:
   m_ObjectHideFlags: 0
