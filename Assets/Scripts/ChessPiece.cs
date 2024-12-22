@@ -8,13 +8,14 @@ public enum ChessType
     ALLY,
     ENEMY
 }
-public class ChessPiece : ChessBaseClass
+public class ChessPiece : MonoBehaviour
 {
     public ChessType type;
     public bool isKing = false;
     public bool isFrozen { get; private set; } = false;
     private int frozenTurnsRemaining = 0; // Counter for frozen turns
 
+    [Header("Visual Info")]
     [SerializeField] private Image chessImage;
     [SerializeField] private Sprite checkerSprite;
     [SerializeField] private Sprite kingSprite;
@@ -25,7 +26,6 @@ public class ChessPiece : ChessBaseClass
     {
         type = _type;
     }
-
     public void TurnToKing()
     {
         if (chessImage != null) 
@@ -37,14 +37,12 @@ public class ChessPiece : ChessBaseClass
         }
         isKing = true;
     }
-
     public void FreezePiece()
     {
         isFrozen = true;
         frozenTurnsRemaining = 2;
         chessImage.color = frozenColor;
     }
-
     public void UnfreezePiece()
     {
         if (frozenTurnsRemaining <= 0) return;
@@ -56,7 +54,6 @@ public class ChessPiece : ChessBaseClass
             chessImage.color = normalColor;
         }
     }
-
     public bool IsFrozenThisTurn()
     {
         return isFrozen;

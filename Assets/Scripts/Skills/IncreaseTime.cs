@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class IncreaseTime : MonoBehaviour
 {
-    public GameState state;
+    public Turn state;
     public float cooldownDurationInMinute;
 
     [SerializeField] private int timeToAddInSecond = 10;
@@ -24,7 +24,7 @@ public class IncreaseTime : MonoBehaviour
 
     public void OnClick()
     {
-        if (!isOnCooldown && this.state == GameManager.Instance.state)
+        if (!isOnCooldown && this.state == GameManager.Instance.current_turn)
         {
             AddTime(timeToAddInSecond);
             StartCoroutine(CooldownRoutine());
@@ -48,7 +48,7 @@ public class IncreaseTime : MonoBehaviour
 
         while (remainingCooldownTime > 0)
         {
-            if (GameManager.Instance.state == this.state)
+            if (GameManager.Instance.current_turn == this.state)
             {
                 remainingCooldownTime -= Time.deltaTime;
 

@@ -9,22 +9,14 @@ public class UIController : MonoBehaviour
     [SerializeField] private Transform enemyDeadHolder;
     [SerializeField] private GameObject m_playerPiece;
     [SerializeField] private GameObject m_enemyPiece;
-
-    private void Start()
-    {
-    }
-    private void Update()
-    {
-        GameState state = GameManager.Instance.state;
-    }
-    public void UpdateDeadPiecesArea(GameState killer)
+    public void UpdateDeadPiecesArea(Turn killer)
     {
         switch (killer)
         {
-            case GameState.PLAYER:
+            case Turn.PLAYER:
                 Instantiate(m_enemyPiece, playerDeadHolder);
                 break;
-            case GameState.ENEMY:
+            case Turn.ENEMY:
                 Instantiate(m_playerPiece, enemyDeadHolder);
                 break;
         }
