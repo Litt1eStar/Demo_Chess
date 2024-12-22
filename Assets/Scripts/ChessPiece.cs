@@ -8,9 +8,20 @@ public enum ChessType
     ALLY,
     ENEMY
 }
+
+public enum ChessClass
+{
+    PAWN,
+    KNIGHT,
+    BISHOP,
+    ROOK,
+    MET,
+    KING
+}
 public class ChessPiece : MonoBehaviour
 {
     public ChessType type;
+    public ChessClass chessClass;
     public bool isKing = false;
     public bool isFrozen { get; private set; } = false;
     private int frozenTurnsRemaining = 0; // Counter for frozen turns
@@ -22,9 +33,10 @@ public class ChessPiece : MonoBehaviour
     [SerializeField] private Color frozenColor;
     [SerializeField] private Color normalColor;
 
-    public void SetChessData(ChessType _type)
+    public void SetChessData(ChessType _type, ChessClass _class)
     {
         type = _type;
+        chessClass = _class;
     }
     public void TurnToKing()
     {
