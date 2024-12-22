@@ -53,23 +53,37 @@ public class BoardController : MonoBehaviour
     }
     IEnumerator InitChessAnimated(int size_x, int size_y, float delay)
     {
-        for (int y = 0; y < row_to_generate; y++)
+        for (int y = 0; y <= row_to_generate ; y++)
         {
             for(int x = 0; x < size_x; x++)
             {
-                if((y%2==0 && x % 2 == 0) || (y%2!=0 && x%2!=0))
+                //First Row
+                if (y == 0)
                 {
                     Cell cell = cells[x, y];
                     yield return SpawnChessPiece(cell, chess_enemy, ChessType.ENEMY, delay);
                 }
-            } 
+
+                if(y == row_to_generate)
+                {
+                    Cell cell = cells[x, y];
+                    yield return SpawnChessPiece(cell, chess_enemy, ChessType.ENEMY, delay);
+                }
+            }
         }
 
-        for (int y = size_y - row_to_generate; y < size_y; y++)
+        for (int y = size_y - 1; y >= size_y - (row_to_generate + 1); y--)
         {
             for (int x = 0; x < size_x; x++)
             {
-                if ((y % 2 == 0 && x % 2 == 0) || (y % 2 != 0 && x % 2 != 0))
+                //First Row
+                if (y == size_y - 1)
+                {
+                    Cell cell = cells[x, y];
+                    yield return SpawnChessPiece(cell, chess_ally, ChessType.ALLY, delay);
+                }
+
+                if (y == size_y - (row_to_generate + 1))
                 {
                     Cell cell = cells[x, y];
                     yield return SpawnChessPiece(cell, chess_ally, ChessType.ALLY, delay);
