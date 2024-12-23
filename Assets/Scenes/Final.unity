@@ -443,7 +443,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0.064
+  m_Volume: 0.041
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -2101,6 +2101,7 @@ MonoBehaviour:
   row_to_generate: 2
   generateBoardDelay: 0.01
   generateChessDelay: 0.05
+  isTesting: 1
   highlightCells:
   - {fileID: 0}
   - {fileID: 0}
@@ -2108,6 +2109,7 @@ MonoBehaviour:
   possibleCellToMove:
   - {fileID: 0}
   - {fileID: 0}
+  testPiece: {fileID: 0}
 --- !u!4 &1114383788
 Transform:
   m_ObjectHideFlags: 0
@@ -2156,6 +2158,13 @@ MonoBehaviour:
   enemyDeadHolder: {fileID: 1166573003}
   m_playerPiece: {fileID: 3074636328319611495, guid: 6a17eea654b025e4094653866f10070f, type: 3}
   m_enemyPiece: {fileID: 4062464875218514594, guid: c29d2e46e9032744da991a46df22315b, type: 3}
+  pieceSpriteList:
+  - {fileID: 21300000, guid: a89afd6d43410c040a51c1a92b80c425, type: 3}
+  - {fileID: -1020493393, guid: fbc5e97f8d6f54043868baa555e34b06, type: 3}
+  - {fileID: -725197706, guid: fbc5e97f8d6f54043868baa555e34b06, type: 3}
+  - {fileID: 21300000, guid: 881c932f568201c4ba85ad7daebedb1e, type: 3}
+  - {fileID: 1189082773, guid: fbc5e97f8d6f54043868baa555e34b06, type: 3}
+  - {fileID: 606737668, guid: fbc5e97f8d6f54043868baa555e34b06, type: 3}
 --- !u!4 &1165131213
 Transform:
   m_ObjectHideFlags: 0
@@ -2577,6 +2586,7 @@ MonoBehaviour:
   current_turn: 0
   isUsingFreeze: 0
   currentKillStreak: 0
+  testClass: 0
 --- !u!4 &1465911307
 Transform:
   m_ObjectHideFlags: 0
