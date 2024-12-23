@@ -197,16 +197,21 @@ public class BoardController : MonoBehaviour
             switch (chessClass)
             {
                 case ChessClass.PAWN:
-                    moves = type == ChessType.ALLY ?
-                        new int[][]
+                    moves = type == ChessType.ALLY
+                        ? new int[][]
                         {
-                            new int[] { 0, -1 }
-                        } :
-
-                        new int[][]
+                            new int[] { -1, -1 }, // Move diagonally left to kill
+                            new int[] { 0, -1 },  // Move forward
+                            new int[] { 1, -1 }   // Move diagonally right to kill
+                        }
+                        : new int[][]
                         {
-                            new int[] { 0, 1 }
+                            new int[] { -1, 1 },  // Move diagonally left to kill
+                            new int[] { 0, 1 },   // Move forward
+                            new int[] { 1, 1 }    // Move diagonally right to kill
                         };
+
+                    bool canKill = false;
 
                     foreach (var move in moves)
                     {
@@ -215,29 +220,42 @@ public class BoardController : MonoBehaviour
 
                         if (newX >= 0 && newX < size_x && newY >= 0 && newY < size_y)
                         {
-                            Cell firstCell = cells[newX, newY];
+                            Cell targetCell = cells[newX, newY];
 
-                            if (firstCell.GetChessPiece() == null)
+                            if (move[0] != 0) // Diagonal moves (kill moves)
                             {
-                                possibleCells.Add(firstCell);
-                            }
-                            else if (firstCell.GetChessPiece().type != GameManager.Instance.CurrentCell().GetChessPiece().type)
-                            {
-                                int beyondX = newX + move[0];
-                                int beyondY = newY + move[1];
-
-                                if (beyondX >= 0 && beyondX < size_x && beyondY >= 0 && beyondY < size_y)
+                                if (targetCell.GetChessPiece() != null && targetCell.GetChessPiece().type != GameManager.Instance.CurrentCell().GetChessPiece().type)
                                 {
-                                    Cell beyondCell = cells[beyondX, beyondY];
-                                    if (beyondCell.GetChessPiece() == null)
+                                    int beyondX = targetCell.GetX() + move[0];
+                                    int beyondY = targetCell.GetY() + move[1];
+
+                                    if (beyondX >= 0 && beyondX < size_x && beyondY >= 0 && beyondY < size_y  && GetCellBy(beyondX, beyondY).GetChessPiece() == null)
                                     {
-                                        possibleCells.Add(firstCell);
+                                        possibleCells.Add(targetCell);
+                                        canKill = true;
                                     }
                                 }
                             }
                         }
                     }
+
+                    if (!canKill)
+                    {
+                        int forwardX = current_x + moves[1][0];
+                        int forwardY = current_y + moves[1][1];
+
+                        if (forwardX >= 0 && forwardX < size_x && forwardY >= 0 && forwardY < size_y)
+                        {
+                            Cell forwardCell = cells[forwardX, forwardY];
+                            if (forwardCell.GetChessPiece() == null)
+                            {
+                                possibleCells.Add(forwardCell);
+                            }
+                        }
+                    }
+
                     break;
+
                 case ChessClass.KNIGHT:
                     break;
                 case ChessClass.BISHOP:
