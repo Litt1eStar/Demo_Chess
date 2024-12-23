@@ -186,11 +186,12 @@ public class BoardController : MonoBehaviour
 
         target.localScale = toScale;
     }
-    public Cell[] GetPossibleCellToMove(ChessType type, bool isKing, int current_x, int current_y)
+    public Cell[] GetPossibleCellToMove(ChessType type, bool isKing, int current_x, int current_y, ChessClass chessClass)
     {
         List<Cell> possibleCells = new List<Cell>();
 
-        if (!isKing)
+        //Non-Rook Move
+        if (chessClass != ChessClass.ROOK)
         {
             int[][] moves = type == ChessType.ALLY
                 ? new int[][] { new int[] { -1, -1 }, new int[] { 1, -1 } }
@@ -226,14 +227,14 @@ public class BoardController : MonoBehaviour
                 }
             }
         }
-        else
+        else //Rook Move
         {
             int[][] directions = new int[][]
             {
-            new int[] {-1, -1}, // up-left
-            new int[] { 1, -1}, // up-right
-            new int[] {-1,  1}, // down-left
-            new int[] { 1,  1}  // down-right
+            new int[] {0,-1}, // front
+            new int[] {1,0}, // right
+            new int[] {0,1}, // back
+            new int[] {-1,0}  // down-right
             };
 
             foreach (var direction in directions)

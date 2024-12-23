@@ -131,7 +131,7 @@ public class GameManager : MonoBehaviour
     private void HandleChainKilling(Cell nextCell, ChessPiece currentChessPiece, int nextCellX, int nextCellY)
     {
         currentCell = nextCell;
-        Cell[] newPossibleCellToMove = board.GetPossibleCellToMove(currentChessPiece.type, currentChessPiece.isKing, nextCellX, nextCellY);
+        Cell[] newPossibleCellToMove = board.GetPossibleCellToMove(currentChessPiece.type, currentChessPiece.isKing, nextCellX, nextCellY, currentChessPiece.chessClass);
         Cell[] possibleCellToKill = board.GetKillablePieceFromPossibleCellToMove(newPossibleCellToMove);
 
         board.ClearPossibleCellToMove();
@@ -167,7 +167,7 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log(cell.ToString());
             ChessPiece chessPiece = currentCell.GetChessPiece();
-            Cell[] possibleCells = board.GetPossibleCellToMove(chessPiece.type, chessPiece.isKing, currentCell.GetX(), currentCell.GetY());
+            Cell[] possibleCells = board.GetPossibleCellToMove(chessPiece.type, chessPiece.isKing, currentCell.GetX(), currentCell.GetY(), chessPiece.chessClass);
             board.SetPossibleCellToMove(possibleCells);
 
             foreach (Cell cellToHighlight in possibleCells)
