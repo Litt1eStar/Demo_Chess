@@ -110,23 +110,12 @@ public class GameManager : MonoBehaviour
     {
         ChessPiece currentChessPiece = currentCell.GetChessPiece();
 
-        int dirX = targetCell.GetX() - currentCell.GetX();
-        int dirY = targetCell.GetY() - currentCell.GetY();
-
-        //Calculate position of next cell to move
-        //NOTE: Use Math.Max() for clamp value to not less than 1 and used Math.Abs() for get only positive value of dirX or dirY
-        //NOTE: dirX / Math.Max(Math.Abs(dirx), 1) is used for get direction of move (1 is right, -1 is left)
-        //but there are a case that dirX will more than 1 so i just divide by itself and keep sign as same by divide dirX by positive value
-        int nextCellX = targetCell.GetX() + dirX / Math.Max(Math.Abs(dirX), 1);
-        int nextCellY = targetCell.GetY() + dirY / Math.Max(Math.Abs(dirY), 1);
-        Cell nextCell = board.GetCellBy(nextCellX, nextCellY);
-
         UpdateDataOnKill(targetCell);
-        Cell destinationCell = nextCell != null && nextCell.GetChessPiece() == null ? nextCell : targetCell;
-        MovePieceToTarget(currentChessPiece, destinationCell);
+        MovePieceToTarget(currentChessPiece, targetCell);
         UpdateUIOnKill();
-
-        HandleChainKilling(nextCell, currentChessPiece, nextCellX, nextCellY);
+        board.ClearPossibleCellToMove();
+        board.ClearAllHighlightOnBoard();
+        SwitchTurn();
     }
     private void HandleChainKilling(Cell nextCell, ChessPiece currentChessPiece, int nextCellX, int nextCellY)
     {

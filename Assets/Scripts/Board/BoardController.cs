@@ -226,14 +226,8 @@ public class BoardController : MonoBehaviour
                             {
                                 if (targetCell.GetChessPiece() != null && targetCell.GetChessPiece().type != GameManager.Instance.CurrentCell().GetChessPiece().type)
                                 {
-                                    int beyondX = targetCell.GetX() + move[0];
-                                    int beyondY = targetCell.GetY() + move[1];
-
-                                    if (beyondX >= 0 && beyondX < size_x && beyondY >= 0 && beyondY < size_y  && GetCellBy(beyondX, beyondY).GetChessPiece() == null)
-                                    {
-                                        possibleCells.Add(targetCell);
-                                        canKill = true;
-                                    }
+                                    possibleCells.Add(targetCell);
+                                    canKill = true;
                                 }
                             }
                         }
@@ -257,6 +251,38 @@ public class BoardController : MonoBehaviour
                     break;
 
                 case ChessClass.KNIGHT:
+                    moves =
+                        new int[][]
+                        {
+                            new int[] { -2, -1},//Up-Left
+                            new int[] { -1, -2},//Up-Left
+                            new int[] { 1, -2 },//Up-Right
+                            new int[] { 2, -1 },//Up-Right
+                            new int[] { 2, 1},//Down-Right
+                            new int[] { 1, 2 },//Down-Right
+                            new int[] {-2, 1},//Down-Left
+                            new int[] {-1, 2},//Down-Left
+                        };
+
+                    foreach (var move in moves)
+                    {
+                        int newX = current_x + move[0];
+                        int newY = current_y + move[1];
+
+                        if (newX >= 0 && newX < size_x && newY >= 0 && newY < size_y)
+                        {
+                            Cell firstCell = cells[newX, newY];
+
+                            if (firstCell.GetChessPiece() == null)
+                            {
+                                possibleCells.Add(firstCell);
+                            }
+                            else if (firstCell.GetChessPiece().type != GameManager.Instance.CurrentCell().GetChessPiece().type)
+                            {
+                                possibleCells.Add(firstCell);
+                            }
+                        }
+                    }
                     break;
                 case ChessClass.BISHOP:
                     break;
@@ -335,17 +361,7 @@ public class BoardController : MonoBehaviour
                     }
                     else if (currentCell.GetChessPiece().type != GameManager.Instance.CurrentCell().GetChessPiece().type)
                     {
-                        int beyondX = x + direction[0];
-                        int beyondY = y + direction[1];
-
-                        if (beyondX >= 0 && beyondX < size_x && beyondY >= 0 && beyondY < size_y)
-                        {
-                            Cell beyondCell = cells[beyondX, beyondY];
-                            if (beyondCell.GetChessPiece() == null)
-                            {
-                                possibleCells.Add(currentCell);
-                            }
-                        }
+                        possibleCells.Add(currentCell);
                         break; // Stop after finding an enemy piece
                     }
                     else
