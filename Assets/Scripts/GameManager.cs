@@ -26,6 +26,8 @@ public class GameManager : MonoBehaviour
     public bool isUsingFreeze;
     public int currentKillStreak = 0;
 
+    [Header("Test Data")]
+    public ChessClass testClass;
     /*public Cell freezeCell;*/
 
     private Cell currentCell;
@@ -45,8 +47,16 @@ public class GameManager : MonoBehaviour
     }
     private void Update()
     {
+        if(board.isTesting) HandleTest();
+
         HandleEndGameCase();
     }
+
+    private void HandleTest()
+    {
+        board.ChangeTestPieceData(testClass);
+    }
+
     public void OnClicked(Cell _clickedCell)
     {
         //If using freezing skill
@@ -204,6 +214,8 @@ public class GameManager : MonoBehaviour
     }
     private void SwitchTurn()
     {
+        if (board.isTesting) return;
+
         currentKillStreak = 0;
 
         foreach (var cell in board.GetAllCells())

@@ -9,6 +9,8 @@ public class UIController : MonoBehaviour
     [SerializeField] private Transform enemyDeadHolder;
     [SerializeField] private GameObject m_playerPiece;
     [SerializeField] private GameObject m_enemyPiece;
+
+    public Sprite[] pieceSpriteList = new Sprite[0];
     public void UpdateDeadPiecesArea(Turn killer)
     {
         switch (killer)

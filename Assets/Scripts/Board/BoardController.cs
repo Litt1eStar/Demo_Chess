@@ -18,13 +18,14 @@ public class BoardController : MonoBehaviour
     [Header("Board Setting")]
     public int size_x = 8, size_y = 8, row_to_generate = 2;
     public float generateBoardDelay = 0.05f, generateChessDelay = 0.1f;
+    public bool isTesting = false;
 
     public Cell[] highlightCells = new Cell[3];
     public Cell[] possibleCellToMove = new Cell[2];
 
     Cell[,] cells;
     ChessPiece[] chessPieces;
-
+    public ChessPiece testPiece;
     private void Awake()
     {
         cells = new Cell[size_x, size_y];
@@ -56,122 +57,150 @@ public class BoardController : MonoBehaviour
     }
     IEnumerator InitChessAnimated(int size_x, int size_y, float delay)
     {
-        for (int y = 0; y <= row_to_generate ; y++)
+        if (!isTesting)
         {
-            for(int x = 0; x < size_x; x++)
+            for (int y = 0; y <= row_to_generate; y++)
             {
-                //First Row
-                if (y == 0)
+                for (int x = 0; x < size_x; x++)
                 {
-                    //boat
-                    if (x == 0 || x == size_x - 1)
+                    //First Row
+                    if (y == 0)
                     {
-                        Cell cell = cells[x, y];
-                        yield return SpawnChessPiece(cell, e_rook, ChessType.ENEMY, delay, ChessClass.ROOK);
+                        //boat
+                        if (x == 0 || x == size_x - 1)
+                        {
+                            Cell cell = cells[x, y];
+                            yield return SpawnChessPiece(cell, e_rook, ChessType.ENEMY, delay, ChessClass.ROOK);
+                        }
+
+                        //horse
+                        if (x == 1 || x == size_x - 2)
+                        {
+                            Cell cell = cells[x, y];
+                            yield return SpawnChessPiece(cell, e_knight, ChessType.ENEMY, delay, ChessClass.KNIGHT);
+                        }
+
+                        //kone
+                        if (x == 2 || x == size_x - 3)
+                        {
+                            Cell cell = cells[x, y];
+                            yield return SpawnChessPiece(cell, e_bishop, ChessType.ENEMY, delay, ChessClass.BISHOP);
+                        }
+
+                        //King
+                        if (x == 4)
+                        {
+                            Cell cell = cells[x, y];
+                            yield return SpawnChessPiece(cell, e_king, ChessType.ENEMY, delay, ChessClass.KING);
+                        }
+
+                        //Med
+                        if (x == 3)
+                        {
+                            Cell cell = cells[x, y];
+                            yield return SpawnChessPiece(cell, e_met, ChessType.ENEMY, delay, ChessClass.MET);
+                        }
                     }
 
-                    //horse
-                    if (x == 1 || x == size_x - 2)
+                    if (y == row_to_generate)
                     {
                         Cell cell = cells[x, y];
-                        yield return SpawnChessPiece(cell, e_knight, ChessType.ENEMY, delay, ChessClass.KNIGHT);
-                    }
-
-                    //kone
-                    if (x == 2 || x == size_x - 3)
-                    {
-                        Cell cell = cells[x, y];
-                        yield return SpawnChessPiece(cell, e_bishop, ChessType.ENEMY, delay, ChessClass.BISHOP);
-                    }
-
-                    //King
-                    if (x == 4)
-                    {
-                        Cell cell = cells[x, y];
-                        yield return SpawnChessPiece(cell, e_king, ChessType.ENEMY, delay, ChessClass.KING);
-                    }
-
-                    //Med
-                    if (x == 3)
-                    {
-                        Cell cell = cells[x, y];
-                        yield return SpawnChessPiece(cell, e_met, ChessType.ENEMY, delay, ChessClass.MET);
+                        yield return SpawnChessPiece(cell, e_pawn, ChessType.ENEMY, delay, ChessClass.PAWN);
                     }
                 }
+            }
 
-                if(y == row_to_generate)
+            for (int y = size_y - 1; y >= size_y - (row_to_generate + 1); y--)
+            {
+                for (int x = 0; x < size_x; x++)
                 {
-                    Cell cell = cells[x, y];
-                    yield return SpawnChessPiece(cell, e_pawn, ChessType.ENEMY, delay, ChessClass.PAWN);
+                    //Last row
+                    if (y == size_y - 1)
+                    {
+                        //boat
+                        if (x == 0 || x == size_x - 1)
+                        {
+                            Cell cell = cells[x, y];
+                            yield return SpawnChessPiece(cell, p_rook, ChessType.ALLY, delay, ChessClass.ROOK);
+                        }
+
+                        //horse
+                        if (x == 1 || x == size_x - 2)
+                        {
+                            Cell cell = cells[x, y];
+                            yield return SpawnChessPiece(cell, p_knight, ChessType.ALLY, delay, ChessClass.KNIGHT);
+                        }
+
+                        //kone
+                        if (x == 2 || x == size_x - 3)
+                        {
+                            Cell cell = cells[x, y];
+                            yield return SpawnChessPiece(cell, p_bishop, ChessType.ALLY, delay, ChessClass.BISHOP);
+                        }
+
+                        //King
+                        if (x == 3)
+                        {
+                            Cell cell = cells[x, y];
+                            yield return SpawnChessPiece(cell, p_king, ChessType.ALLY, delay, ChessClass.KING);
+                        }
+
+                        //Med
+                        if (x == 4)
+                        {
+                            Cell cell = cells[x, y];
+                            yield return SpawnChessPiece(cell, p_met, ChessType.ALLY, delay, ChessClass.MET);
+                        }
+                    }
+
+                    if (y == size_y - (row_to_generate + 1))
+                    {
+                        Cell cell = cells[x, y];
+                        yield return SpawnChessPiece(cell, p_pawn, ChessType.ALLY, delay, ChessClass.PAWN);
+                    }
                 }
             }
         }
-
-        for (int y = size_y - 1; y >= size_y - (row_to_generate + 1); y--)
+        else
         {
-            for (int x = 0; x < size_x; x++)
-            {
-                //Last row
-                if (y == size_y - 1)
-                {
-                    //boat
-                    if (x == 0 || x == size_x - 1)
-                    {
-                        Cell cell = cells[x, y];
-                        yield return SpawnChessPiece(cell, p_rook, ChessType.ALLY, delay, ChessClass.ROOK);
-                    }
-
-                    //horse
-                    if (x == 1 || x == size_x - 2)
-                    {
-                        Cell cell = cells[x, y];
-                        yield return SpawnChessPiece(cell, p_knight, ChessType.ALLY, delay, ChessClass.KNIGHT);
-                    }
-
-                    //kone
-                    if (x == 2 || x == size_x - 3)
-                    {
-                        Cell cell = cells[x, y];
-                        yield return SpawnChessPiece(cell, p_bishop, ChessType.ALLY, delay, ChessClass.BISHOP);
-                    }
-
-                    //King
-                    if (x == 3)
-                    {
-                        Cell cell = cells[x, y];
-                        yield return SpawnChessPiece(cell, p_king, ChessType.ALLY, delay, ChessClass.KING);
-                    }
-
-                    //Med
-                    if (x == 4)
-                    {
-                        Cell cell = cells[x, y];
-                        yield return SpawnChessPiece(cell, p_met, ChessType.ALLY, delay, ChessClass.MET);
-                    }
-                }
-
-                if (y == size_y - (row_to_generate + 1))
-                {
-                    Cell cell = cells[x, y];
-                    yield return SpawnChessPiece(cell, p_pawn, ChessType.ALLY, delay, ChessClass.PAWN);
-                }
-            }
+            Cell cell = cells[3, 4];
+            yield return SpawnChessPiece(cell, p_pawn, ChessType.ALLY, delay, ChessClass.PAWN);
         }
+
     }
     IEnumerator SpawnChessPiece(Cell cell, GameObject prefab, ChessType type, float delay, ChessClass chessClass)
     {
-        GameObject m_chess = Instantiate(prefab, cell.gameObject.transform);
-        ChessPiece piece = m_chess.GetComponent<ChessPiece>();
+        if (isTesting)
+        {
+            GameObject m_chess = Instantiate(prefab, cell.gameObject.transform);
+            ChessPiece piece = m_chess.GetComponent<ChessPiece>();
 
-        piece.SetChessData(type, chessClass);
-        chessPieces.Append(piece);
+            piece.SetChessData(type, chessClass);
+            testPiece = piece;
+            chessPieces.Append(piece);
 
-        cell.SetChessOnCell(piece);
+            cell.SetChessOnCell(piece);
 
-        m_chess.transform.localScale = Vector3.zero;
-        StartCoroutine(ScaleOverTime(m_chess.transform, Vector3.zero, Vector3.one, 0.3f));
+            m_chess.transform.localScale = Vector3.zero;
+            StartCoroutine(ScaleOverTime(m_chess.transform, Vector3.zero, Vector3.one, 0.3f));
 
-        yield return new WaitForSeconds(delay);
+            yield return new WaitForSeconds(delay);
+        }
+        else
+        {
+            GameObject m_chess = Instantiate(prefab, cell.gameObject.transform);
+            ChessPiece piece = m_chess.GetComponent<ChessPiece>();
+
+            piece.SetChessData(type, chessClass);
+            chessPieces.Append(piece);
+
+            cell.SetChessOnCell(piece);
+
+            m_chess.transform.localScale = Vector3.zero;
+            StartCoroutine(ScaleOverTime(m_chess.transform, Vector3.zero, Vector3.one, 0.3f));
+
+            yield return new WaitForSeconds(delay);
+        }
     }
     IEnumerator ScaleOverTime(Transform target, Vector3 fromScale, Vector3 toScale, float duration)
     {
@@ -363,6 +392,7 @@ public class BoardController : MonoBehaviour
                             new int[] { 1, 1 },
                             new int[] { 0, 1 },
                             new int[] { -1, 1 },
+                            new int[] { -1, 0 }
                         };
 
                     foreach (var move in moves)
@@ -481,5 +511,40 @@ public class BoardController : MonoBehaviour
     }
     public Cell GetCellBy(int x, int y) => cells[x, y];
     public Cell[,] GetAllCells() => cells;
+    public void ChangeTestPieceData(ChessClass new_testClass)
+    {
+        if(testPiece == null)
+        {
+            Debug.LogWarning("Test Piece is Null");
+            return;
+        }
+        switch (new_testClass)
+        {
+            case ChessClass.PAWN:
+                testPiece.chessClass = new_testClass;
+                testPiece.ChangeImage(GameManager.Instance.ui.pieceSpriteList[0]);
+                break;
+            case ChessClass.KNIGHT:
+                testPiece.chessClass = new_testClass;
+                testPiece.ChangeImage(GameManager.Instance.ui.pieceSpriteList[1]);
+                break;
+            case ChessClass.BISHOP:
+                testPiece.chessClass = new_testClass;
+                testPiece.ChangeImage(GameManager.Instance.ui.pieceSpriteList[4]);
+                break;
+            case ChessClass.ROOK:
+                testPiece.chessClass = new_testClass;
+                testPiece.ChangeImage(GameManager.Instance.ui.pieceSpriteList[2]);
+                break;
+            case ChessClass.MET:
+                testPiece.chessClass = new_testClass;
+                testPiece.ChangeImage(GameManager.Instance.ui.pieceSpriteList[5]);
+                break;
+            case ChessClass.KING:
+                testPiece.chessClass = new_testClass;
+                testPiece.ChangeImage(GameManager.Instance.ui.pieceSpriteList[3]);
+                break;
+        }
+    }
 
 }

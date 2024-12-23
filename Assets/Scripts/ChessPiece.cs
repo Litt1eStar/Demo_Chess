@@ -11,12 +11,12 @@ public enum ChessType
 
 public enum ChessClass
 {
-    PAWN,
-    KNIGHT,
-    BISHOP,
-    ROOK,
-    MET,
-    KING
+    PAWN,//0
+    KNIGHT,//1
+    BISHOP,//4
+    ROOK,//2
+    MET,//5
+    KING//3
 }
 public class ChessPiece : MonoBehaviour
 {
@@ -69,6 +69,10 @@ public class ChessPiece : MonoBehaviour
     public bool IsFrozenThisTurn()
     {
         return isFrozen;
+    }
+    public void ChangeImage(Sprite _sprite)
+    {
+        chessImage.sprite = _sprite;    
     }
 }
 
