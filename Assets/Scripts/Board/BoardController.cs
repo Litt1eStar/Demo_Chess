@@ -243,7 +243,44 @@ public class BoardController : MonoBehaviour
                 case ChessClass.BISHOP:
                     break;
                 case ChessClass.MET:
-                    
+                    moves =
+                        new int[][]
+                        {
+                            new int[] { -1, -1 },
+                            new int[] { 1, -1 },
+                            new int[] { 1, 1 },
+                            new int[] { -1, 1 }
+                        };
+
+                    foreach (var move in moves)
+                    {
+                        int newX = current_x + move[0];
+                        int newY = current_y + move[1];
+
+                        if (newX >= 0 && newX < size_x && newY >= 0 && newY < size_y)
+                        {
+                            Cell firstCell = cells[newX, newY];
+
+                            if (firstCell.GetChessPiece() == null)
+                            {
+                                possibleCells.Add(firstCell);
+                            }
+                            else if (firstCell.GetChessPiece().type != GameManager.Instance.CurrentCell().GetChessPiece().type)
+                            {
+                                int beyondX = newX + move[0];
+                                int beyondY = newY + move[1];
+
+                                if (beyondX >= 0 && beyondX < size_x && beyondY >= 0 && beyondY < size_y)
+                                {
+                                    Cell beyondCell = cells[beyondX, beyondY];
+                                    if (beyondCell.GetChessPiece() == null)
+                                    {
+                                        possibleCells.Add(firstCell);
+                                    }
+                                }
+                            }
+                        }
+                    }
                     break;
                 case ChessClass.KING:
                     break;
