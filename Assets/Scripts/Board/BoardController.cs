@@ -176,6 +176,7 @@ public class BoardController : MonoBehaviour
             ChessPiece piece = m_chess.GetComponent<ChessPiece>();
 
             piece.SetChessData(type, chessClass);
+            piece.SetMoveByClass(piece.chessClass);
             testPiece = piece;
             chessPieces.Append(piece);
 
@@ -192,6 +193,7 @@ public class BoardController : MonoBehaviour
             ChessPiece piece = m_chess.GetComponent<ChessPiece>();
 
             piece.SetChessData(type, chessClass);
+            piece.SetMoveByClass(piece.chessClass);
             chessPieces.Append(piece);
 
             cell.SetChessOnCell(piece);
@@ -223,23 +225,12 @@ public class BoardController : MonoBehaviour
         if (chessClass != ChessClass.ROOK)
         {
             int[][] moves;
+            ChessPiece current_piece = GetCellBy(current_x, current_y).GetChessPiece();
+            moves = current_piece.pieceMoves;
             switch (chessClass)
             {
                 case ChessClass.PAWN:
-                    moves = type == ChessType.ALLY
-                        ? new int[][]
-                        {
-                            new int[] { -1, -1 }, // Move diagonally left to kill
-                            new int[] { 0, -1 },  // Move forward
-                            new int[] { 1, -1 }   // Move diagonally right to kill
-                        }
-                        : new int[][]
-                        {
-                            new int[] { -1, 1 },  // Move diagonally left to kill
-                            new int[] { 0, 1 },   // Move forward
-                            new int[] { 1, 1 }    // Move diagonally right to kill
-                        };
-
+                    moves = current_piece.pieceMoves;
                     bool canKill = false;
 
                     foreach (var move in moves)
@@ -279,83 +270,26 @@ public class BoardController : MonoBehaviour
 
                     break;
                 case ChessClass.KNIGHT:
-                    moves =
-                        new int[][]
-                        {
-                            new int[] { -2, -1},//Up-Left
-                            new int[] { -1, -2},//Up-Left
-                            new int[] { 1, -2 },//Up-Right
-                            new int[] { 2, -1 },//Up-Right
-                            new int[] { 2, 1},//Down-Right
-                            new int[] { 1, 2 },//Down-Right
-                            new int[] {-2, 1},//Down-Left
-                            new int[] {-1, 2},//Down-Left
-                        };
-
                     possibleCells = CalculatePossibleCellToMove(moves, current_x, current_y);
                     break;
                 case ChessClass.BISHOP:
-                    moves = type == ChessType.ALLY ?
-                        new int[][]
-                        {
-                            new int[] { -1, -1 },
-                            new int[] { 0, -1 },
-                            new int[] { 1, -1 },
-                            new int[] { -1, 1},
-                            new int[] { 1, 1 },
-                        } :
-                        new int[][]
-                        {
-                            new int[] { 1, 1},
-                            new int[] { 0, 1},
-                            new int[] { -1, 1},
-                            new int[] { -1, -1},
-                            new int[] { 1, -1}
-                        };
-
                     possibleCells = CalculatePossibleCellToMove(moves, current_x, current_y);
                     break;
                 case ChessClass.MET:
-                    moves =
-                        new int[][]
-                        {
-                            new int[] { -1, -1 },
-                            new int[] { 1, -1 },
-                            new int[] { 1, 1 },
-                            new int[] { -1, 1 }
-                        };
-
                     possibleCells = CalculatePossibleCellToMove(moves, current_x, current_y);
                     break;
                 case ChessClass.KING:
-                    moves =
-                        new int[][]
-                        {
-                            new int[] { -1, -1 },
-                            new int[] { 0, -1 },
-                            new int[] { 1, -1 },
-                            new int[] { 1, 0},
-                            new int[] { 1, 1 },
-                            new int[] { 0, 1 },
-                            new int[] { -1, 1 },
-                            new int[] { -1, 0 }
-                        };
-
                     possibleCells = CalculatePossibleCellToMove(moves, current_x, current_y);
                     break;
             }
         }
         else //Rook Move
         {
-            int[][] directions = new int[][]
-            {
-            new int[] {0,-1}, // front
-            new int[] {1,0}, // right
-            new int[] {0,1}, // back
-            new int[] {-1,0}  // down-right
-            };
+            int[][] moves;
+            ChessPiece current_piece = GetCellBy(current_x, current_y).GetChessPiece();
+            moves = current_piece.pieceMoves;
 
-            foreach (var direction in directions)
+            foreach (var direction in moves)
             {
                 int x = current_x;
                 int y = current_y;
@@ -412,20 +346,6 @@ public class BoardController : MonoBehaviour
             }
         }
         return possibleCells;
-    }
-    public Cell[] GetKillablePieceFromPossibleCellToMove(Cell[] _possibleCellToMove)
-    {
-        List<Cell> killableCells = new List<Cell>();
-
-        foreach (Cell cell in _possibleCellToMove)
-        {
-            if(cell.GetChessPiece() != null)
-            {
-                killableCells.Add(cell);
-            }
-        }
-
-        return killableCells.ToArray();
     }
     public void InsertHighlightCell(Cell highlightCell)
     {

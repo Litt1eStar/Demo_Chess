@@ -2101,7 +2101,7 @@ MonoBehaviour:
   row_to_generate: 2
   generateBoardDelay: 0.01
   generateChessDelay: 0.05
-  isTesting: 1
+  isTesting: 0
   highlightCells:
   - {fileID: 0}
   - {fileID: 0}

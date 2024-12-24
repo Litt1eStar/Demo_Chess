@@ -48,8 +48,6 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         if(board.isTesting) HandleTest();
-
-        HandleEndGameCase();
     }
 
     private void HandleTest()
@@ -119,41 +117,21 @@ public class GameManager : MonoBehaviour
     private void HandleKill(Cell targetCell)
     {
         ChessPiece currentChessPiece = currentCell.GetChessPiece();
-
+        ChessPiece deadPiece = targetCell.GetChessPiece();
+            
         UpdateDataOnKill(targetCell);
         MovePieceToTarget(currentChessPiece, targetCell);
         UpdateUIOnKill();
         board.ClearPossibleCellToMove();
         board.ClearAllHighlightOnBoard();
+
+        if(deadPiece.chessClass == ChessClass.KING)
+        {
+            HandleEndGameCase(current_turn);
+            return;
+        }
+
         SwitchTurn();
-    }
-    private void HandleChainKilling(Cell nextCell, ChessPiece currentChessPiece, int nextCellX, int nextCellY)
-    {
-        currentCell = nextCell;
-        Cell[] newPossibleCellToMove = board.GetPossibleCellToMove(currentChessPiece.type, currentChessPiece.isKing, nextCellX, nextCellY, currentChessPiece.chessClass);
-        Cell[] possibleCellToKill = board.GetKillablePieceFromPossibleCellToMove(newPossibleCellToMove);
-
-        board.ClearPossibleCellToMove();
-        board.ClearAllHighlightOnBoard();
-
-        if (possibleCellToKill.Length > 0)
-        {
-            board.SetPossibleCellToMove(possibleCellToKill);
-            foreach (Cell cellToHighlight in possibleCellToKill)
-            {
-                if (cellToHighlight != null)
-                {
-                    board.InsertHighlightCell(cellToHighlight);
-                }
-            }
-            board.StartHighlightCell();
-        }
-        else
-        {
-            board.ClearPossibleCellToMove();
-            board.ClearAllHighlightOnBoard();
-            SwitchTurn();
-        }
     }
     private void SelectCell(Cell cell)
     {
@@ -198,12 +176,6 @@ public class GameManager : MonoBehaviour
     }
     private void MovePieceToTarget(ChessPiece piece, Cell targetCell)
     {
-        //If targetCell is at last row or first row then piece will turn to be King
-        if (targetCell.GetY() == 7 || targetCell.GetY() == 0)
-        {
-            piece.TurnToKing();
-        }
-
         piece.gameObject.transform.SetParent(targetCell.transform);
         piece.gameObject.GetComponent<RectTransform>().localPosition = Vector3.zero;
 
@@ -232,19 +204,23 @@ public class GameManager : MonoBehaviour
 
         current_turn = current_turn == Turn.PLAYER ? Turn.ENEMY : Turn.PLAYER;
     }
-    private void HandleEndGameCase()
+    private void HandleEndGameCase(Turn winner)
     {
-        if (playerDeadPieces >= 8 && enemyDeadPieces < playerDeadPieces)
+        if (winner == Turn.ENEMY)
         {
             SceneManager.LoadScene("EnemyWin");
         }
-        else if (enemyDeadPieces >= 8 && playerDeadPieces < enemyDeadPieces)
+        else if (winner == Turn.PLAYER)
         {
             SceneManager.LoadScene("PlayerWin");
         }
     }
     private void UpdateDataOnKill(Cell targetCell)
     {
+        if (currentCell.GetChessPiece().chessClass == ChessClass.PAWN)
+        {
+            currentCell.GetChessPiece().TurnToAnotherVariant();
+        }
         Destroy(targetCell.GetChessPiece().gameObject);
         targetCell.SetChessOnCell(null);
         AudioManager.Instance.PlaySFX(AudioManager.Instance.pieceKill);

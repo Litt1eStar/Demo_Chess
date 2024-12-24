@@ -165,6 +165,6 @@ MonoBehaviour:
   isKing: 0
   chessImage: {fileID: 7949175364139236203}
   checkerSprite: {fileID: 21300000, guid: a89afd6d43410c040a51c1a92b80c425, type: 3}
-  kingSprite: {fileID: 21300000, guid: 881c932f568201c4ba85ad7daebedb1e, type: 3}
+  downPanwSprite: {fileID: -947467311, guid: b6e22dbd4901aa44685182287679cb55, type: 3}
   frozenColor: {r: 0.23300098, g: 0.5279466, b: 0.9622642, a: 1}
   normalColor: {r: 1, g: 1, b: 1, a: 1}
