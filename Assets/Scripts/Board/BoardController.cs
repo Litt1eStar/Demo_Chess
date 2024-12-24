@@ -292,25 +292,7 @@ public class BoardController : MonoBehaviour
                             new int[] {-1, 2},//Down-Left
                         };
 
-                    foreach (var move in moves)
-                    {
-                        int newX = current_x + move[0];
-                        int newY = current_y + move[1];
-
-                        if (newX >= 0 && newX < size_x && newY >= 0 && newY < size_y)
-                        {
-                            Cell firstCell = cells[newX, newY];
-
-                            if (firstCell.GetChessPiece() == null)
-                            {
-                                possibleCells.Add(firstCell);
-                            }
-                            else if (firstCell.GetChessPiece().type != GameManager.Instance.CurrentCell().GetChessPiece().type)
-                            {
-                                possibleCells.Add(firstCell);
-                            }
-                        }
-                    }
+                    possibleCells = CalculatePossibleCellToMove(moves, current_x, current_y);
                     break;
                 case ChessClass.BISHOP:
                     moves = type == ChessType.ALLY ?
@@ -331,25 +313,7 @@ public class BoardController : MonoBehaviour
                             new int[] { 1, -1}
                         };
 
-                    foreach (var move in moves)
-                    {
-                        int newX = current_x + move[0];
-                        int newY = current_y + move[1];
-
-                        if (newX >= 0 && newX < size_x && newY >= 0 && newY < size_y)
-                        {
-                            Cell firstCell = cells[newX, newY];
-
-                            if (firstCell.GetChessPiece() == null)
-                            {
-                                possibleCells.Add(firstCell);
-                            }
-                            else if (firstCell.GetChessPiece().type != GameManager.Instance.CurrentCell().GetChessPiece().type)
-                            {
-                                possibleCells.Add(firstCell);
-                            }
-                        }
-                    }
+                    possibleCells = CalculatePossibleCellToMove(moves, current_x, current_y);
                     break;
                 case ChessClass.MET:
                     moves =
@@ -361,25 +325,7 @@ public class BoardController : MonoBehaviour
                             new int[] { -1, 1 }
                         };
 
-                    foreach (var move in moves)
-                    {
-                        int newX = current_x + move[0];
-                        int newY = current_y + move[1];
-
-                        if (newX >= 0 && newX < size_x && newY >= 0 && newY < size_y)
-                        {
-                            Cell firstCell = cells[newX, newY];
-
-                            if (firstCell.GetChessPiece() == null)
-                            {
-                                possibleCells.Add(firstCell);
-                            }
-                            else if (firstCell.GetChessPiece().type != GameManager.Instance.CurrentCell().GetChessPiece().type)
-                            {
-                                possibleCells.Add(firstCell);
-                            }
-                        }
-                    }
+                    possibleCells = CalculatePossibleCellToMove(moves, current_x, current_y);
                     break;
                 case ChessClass.KING:
                     moves =
@@ -395,25 +341,7 @@ public class BoardController : MonoBehaviour
                             new int[] { -1, 0 }
                         };
 
-                    foreach (var move in moves)
-                    {
-                        int newX = current_x + move[0];
-                        int newY = current_y + move[1];
-
-                        if (newX >= 0 && newX < size_x && newY >= 0 && newY < size_y)
-                        {
-                            Cell firstCell = cells[newX, newY];
-
-                            if (firstCell.GetChessPiece() == null)
-                            {
-                                possibleCells.Add(firstCell);
-                            }
-                            else if (firstCell.GetChessPiece().type != GameManager.Instance.CurrentCell().GetChessPiece().type)
-                            {
-                                possibleCells.Add(firstCell);
-                            }
-                        }
-                    }
+                    possibleCells = CalculatePossibleCellToMove(moves, current_x, current_y);
                     break;
             }
         }
@@ -460,6 +388,30 @@ public class BoardController : MonoBehaviour
         }
 
         return possibleCells.ToArray();
+    }
+    List<Cell> CalculatePossibleCellToMove(int[][] moves, int current_x, int current_y)
+    {
+        List<Cell> possibleCells = new List<Cell>();
+        foreach (var move in moves)
+        {
+            int newX = current_x + move[0];
+            int newY = current_y + move[1];
+
+            if (newX >= 0 && newX < size_x && newY >= 0 && newY < size_y)
+            {
+                Cell firstCell = cells[newX, newY];
+
+                if (firstCell.GetChessPiece() == null)
+                {
+                    possibleCells.Add(firstCell);
+                }
+                else if (firstCell.GetChessPiece().type != GameManager.Instance.CurrentCell().GetChessPiece().type)
+                {
+                    possibleCells.Add(firstCell);
+                }
+            }
+        }
+        return possibleCells;
     }
     public Cell[] GetKillablePieceFromPossibleCellToMove(Cell[] _possibleCellToMove)
     {
