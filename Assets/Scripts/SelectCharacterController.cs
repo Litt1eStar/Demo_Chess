@@ -16,6 +16,10 @@ public class SelectCharacterController : MonoBehaviour
     public string player01_name;
     public string player02_name;
 
+    public GameObject m_errorText;
+    public Transform txtSpawner;
+    public float distanceToMove = 30f;
+
     public AnimatorController blueOrg;
     public AnimatorController greenOrg;
     public AnimatorController lightGreenOrg;
@@ -122,10 +126,39 @@ public class SelectCharacterController : MonoBehaviour
 
     public void OnClickNextBtn()
     {
+        if (player01_name.Length <= 0 || player02_name.Length <= 0)
+        {
+            GenerateErrorText();
+            AudioManager.Instance.PlaySFX(AudioManager.Instance.ui_error);
+            return;
+        }
+
+        AudioManager.Instance.PlaySFX(AudioManager.Instance.ui_select);
         PlayerPrefs.SetString("player01", avatarName_player01);
         PlayerPrefs.SetString("player02", avatarName_player02);
         PlayerPrefs.SetString("player01_name", player01_name);
         PlayerPrefs.SetString("player02_name", player02_name);
         SceneManager.LoadScene("Final");
+    }
+
+    private void GenerateErrorText()
+    {
+        GameObject m_txt = Instantiate(m_errorText, txtSpawner.position, Quaternion.identity);
+        m_txt.transform.parent = txtSpawner;
+        Destroy(m_txt, 2f);
+    }
+
+    private IEnumerator AnimateText(Transform txtPosition)
+    {
+        Vector2 startPosition = txtPosition.position;
+        Vector2 endPosition = txtPosition.position + new Vector3(0, distanceToMove);
+
+        while (Vector2.Distance(startPosition, endPosition) > 0.1f)
+        {
+            txtPosition.position = Vector3.MoveTowards(txtPosition.position, endPosition, 10f * Time.deltaTime);
+            yield return null;
+        }
+
+        txtPosition.position = endPosition;
     }
 }
