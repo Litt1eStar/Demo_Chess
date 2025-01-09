@@ -6,6 +6,8 @@ public class AudioManager : MonoBehaviour
 {
     public static AudioManager Instance { get; private set; }
 
+    public bool isSelectScene = false;
+
     [SerializeField] private AudioSource musicSource, sfxSource;
 
     [Header("Sound Effect")]
@@ -15,6 +17,9 @@ public class AudioManager : MonoBehaviour
     public AudioClip king;
     public AudioClip iceSkill;
     public AudioClip timeSkill;
+
+    public AudioClip ui_select;
+    public AudioClip ui_error;
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -29,6 +34,8 @@ public class AudioManager : MonoBehaviour
 
     private void Start()
     {
+        if (isSelectScene) return;
+
         musicSource.clip = background;
         musicSource.Play();
     }

@@ -32,6 +32,7 @@ public class AvatarBtn : MonoBehaviour
         btn.colors = colors;
 
         controller.SetAvatarData(avatarName, player);
+        AudioManager.Instance.PlaySFX(AudioManager.Instance.ui_select);
 
         controller.RefreshButtons();
     }
