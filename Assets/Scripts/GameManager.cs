@@ -30,6 +30,10 @@ public class GameManager : MonoBehaviour
     public ChessClass testClass;
     /*public Cell freezeCell;*/
 
+    [Header("Avatar")]
+    public Animator player01_anim;
+    public Animator player02_anim;
+
     private Cell currentCell;
     private int playerDeadPieces = 0;
     private int enemyDeadPieces = 0;
@@ -203,6 +207,26 @@ public class GameManager : MonoBehaviour
         }
 
         current_turn = current_turn == Turn.PLAYER ? Turn.ENEMY : Turn.PLAYER;
+        if (current_turn == Turn.PLAYER)
+        {
+            player01_anim.SetBool("isStartTurn", true);
+        }
+        else if (current_turn == Turn.ENEMY)
+        {
+            player02_anim.SetBool("isStartTurn", true);
+        }
+    }
+
+    public void FinishAvatarAnimation()
+    {
+        if (current_turn == Turn.PLAYER)
+        {
+            player01_anim.SetBool("isStartTurn", false);
+        }
+        else if (current_turn == Turn.ENEMY)
+        {
+            player02_anim.SetBool("isStartTurn", false);
+        }
     }
     private void HandleEndGameCase(Turn winner)
     {
