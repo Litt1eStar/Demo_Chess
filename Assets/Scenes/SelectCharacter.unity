@@ -2899,6 +2899,7 @@ GameObject:
   - component: {fileID: 1105135737}
   - component: {fileID: 1105135736}
   - component: {fileID: 1105135735}
+  - component: {fileID: 1105135738}
   m_Layer: 5
   m_Name: Player01_Name
   m_TagString: Untagged
@@ -3005,7 +3006,19 @@ MonoBehaviour:
       m_Calls: []
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1105135738}
+        m_TargetAssemblyTypeName: PlayerNameInputField, Assembly-CSharp
+        m_MethodName: OnValueChange
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_OnTouchScreenKeyboardStatusChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -3062,6 +3075,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1105135733}
   m_CullTransparentMesh: 1
+--- !u!114 &1105135738
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1105135733}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2fac9ade4afbc245af403a3659c323d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: player01
+  sceneController: {fileID: 1241124487}
 --- !u!1 &1144030327
 GameObject:
   m_ObjectHideFlags: 0
@@ -3297,6 +3324,8 @@ MonoBehaviour:
   player02_anim: {fileID: 263149744}
   avatarName_player01: 
   avatarName_player02: 
+  player01_name: 
+  player02_name: 
   blueOrg: {fileID: 9100000, guid: 7381af84e249a8049915b7d7270aa4ce, type: 2}
   greenOrg: {fileID: 9100000, guid: 8302a49e359003941a97c57d9ee729ff, type: 2}
   lightGreenOrg: {fileID: 9100000, guid: acee412b04e57b64798f8b82f5b8d089, type: 2}
@@ -4101,6 +4130,7 @@ GameObject:
   - component: {fileID: 1798946108}
   - component: {fileID: 1798946107}
   - component: {fileID: 1798946106}
+  - component: {fileID: 1798946109}
   m_Layer: 5
   m_Name: Player02_Name
   m_TagString: Untagged
@@ -4207,7 +4237,19 @@ MonoBehaviour:
       m_Calls: []
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1798946109}
+        m_TargetAssemblyTypeName: PlayerNameInputField, Assembly-CSharp
+        m_MethodName: OnValueChange
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_OnTouchScreenKeyboardStatusChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -4264,6 +4306,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1798946104}
   m_CullTransparentMesh: 1
+--- !u!114 &1798946109
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1798946104}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2fac9ade4afbc245af403a3659c323d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: player02
+  sceneController: {fileID: 1241124487}
 --- !u!1 &1866945983
 GameObject:
   m_ObjectHideFlags: 0

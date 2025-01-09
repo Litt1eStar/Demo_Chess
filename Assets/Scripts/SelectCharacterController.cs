@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Animations;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class SelectCharacterController : MonoBehaviour
@@ -11,6 +12,9 @@ public class SelectCharacterController : MonoBehaviour
 
     public string avatarName_player01 = "";
     public string avatarName_player02 = "";
+
+    public string player01_name;
+    public string player02_name;
 
     public AnimatorController blueOrg;
     public AnimatorController greenOrg;
@@ -104,9 +108,24 @@ public class SelectCharacterController : MonoBehaviour
         }
     }
 
+    public void ChangePlayerName(string player, string value)
+    {
+        if (player == "player01")
+        {
+            player01_name = value;
+        }
+        else if (player == "player02")
+        {
+            player02_name = value;
+        }
+    }
+
     public void OnClickNextBtn()
     {
         PlayerPrefs.SetString("player01", avatarName_player01);
         PlayerPrefs.SetString("player02", avatarName_player02);
+        PlayerPrefs.SetString("player01_name", player01_name);
+        PlayerPrefs.SetString("player02_name", player02_name);
+        SceneManager.LoadScene("Final");
     }
 }
