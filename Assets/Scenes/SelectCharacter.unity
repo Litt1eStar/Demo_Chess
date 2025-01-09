@@ -286,6 +286,7 @@ GameObject:
   - component: {fileID: 90514299}
   - component: {fileID: 90514298}
   - component: {fileID: 90514300}
+  - component: {fileID: 90514301}
   m_Layer: 5
   m_Name: Button (2)
   m_TagString: Untagged
@@ -393,7 +394,36 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 90514298}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 90514301}
+        m_TargetAssemblyTypeName: AvatarBtn, Assembly-CSharp
+        m_MethodName: SetAvatarData
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &90514301
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 90514296}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 421e3c96f432d9044b22d9d1b4226a6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controller: {fileID: 1241124487}
+  selectedColor: {r: 0.18867922, g: 0.18867922, b: 0.18867922, a: 1}
+  disabledColor: {r: 0, g: 0, b: 0, a: 0}
+  avatarName: redOrg
+  player: player02
 --- !u!1 &100858898
 GameObject:
   m_ObjectHideFlags: 0
@@ -406,6 +436,7 @@ GameObject:
   - component: {fileID: 100858901}
   - component: {fileID: 100858900}
   - component: {fileID: 100858902}
+  - component: {fileID: 100858903}
   m_Layer: 5
   m_Name: Button (1)
   m_TagString: Untagged
@@ -513,7 +544,36 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 100858900}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 100858903}
+        m_TargetAssemblyTypeName: AvatarBtn, Assembly-CSharp
+        m_MethodName: SetAvatarData
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &100858903
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100858898}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 421e3c96f432d9044b22d9d1b4226a6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controller: {fileID: 1241124487}
+  selectedColor: {r: 0.18867922, g: 0.18867922, b: 0.18867922, a: 1}
+  disabledColor: {r: 0, g: 0, b: 0, a: 0}
+  avatarName: pinkOrg
+  player: player01
 --- !u!1 &187044286
 GameObject:
   m_ObjectHideFlags: 0
@@ -646,8 +706,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Enter Player 1 Name...
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: edc6dd06e7eee0449ad79e93f2fe9689, type: 2}
+  m_sharedMaterial: {fileID: -8844964569484215036, guid: edc6dd06e7eee0449ad79e93f2fe9689, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -733,6 +793,7 @@ GameObject:
   - component: {fileID: 208384202}
   - component: {fileID: 208384201}
   - component: {fileID: 208384203}
+  - component: {fileID: 208384204}
   m_Layer: 5
   m_Name: Button (1)
   m_TagString: Untagged
@@ -840,7 +901,36 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 208384201}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 208384204}
+        m_TargetAssemblyTypeName: AvatarBtn, Assembly-CSharp
+        m_MethodName: SetAvatarData
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &208384204
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 208384199}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 421e3c96f432d9044b22d9d1b4226a6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controller: {fileID: 1241124487}
+  selectedColor: {r: 0.18867922, g: 0.18867922, b: 0.18867922, a: 1}
+  disabledColor: {r: 0, g: 0, b: 0, a: 0}
+  avatarName: pinkOrg
+  player: player02
 --- !u!1 &228506145
 GameObject:
   m_ObjectHideFlags: 0
@@ -853,6 +943,7 @@ GameObject:
   - component: {fileID: 228506148}
   - component: {fileID: 228506147}
   - component: {fileID: 228506149}
+  - component: {fileID: 228506150}
   m_Layer: 5
   m_Name: Button (3)
   m_TagString: Untagged
@@ -960,7 +1051,36 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 228506147}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 228506150}
+        m_TargetAssemblyTypeName: AvatarBtn, Assembly-CSharp
+        m_MethodName: SetAvatarData
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &228506150
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 228506145}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 421e3c96f432d9044b22d9d1b4226a6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controller: {fileID: 1241124487}
+  selectedColor: {r: 0.18867922, g: 0.18867922, b: 0.18867922, a: 1}
+  disabledColor: {r: 0, g: 0, b: 0, a: 0}
+  avatarName: blueOrg
+  player: player01
 --- !u!1 &262747852
 GameObject:
   m_ObjectHideFlags: 0
@@ -1041,6 +1161,7 @@ GameObject:
   - component: {fileID: 262892656}
   - component: {fileID: 262892655}
   - component: {fileID: 262892657}
+  - component: {fileID: 262892658}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -1129,7 +1250,7 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_SelectedColor: {r: 1, g: 1, b: 1, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -1148,7 +1269,36 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 262892655}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 262892658}
+        m_TargetAssemblyTypeName: AvatarBtn, Assembly-CSharp
+        m_MethodName: SetAvatarData
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &262892658
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 262892653}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 421e3c96f432d9044b22d9d1b4226a6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controller: {fileID: 1241124487}
+  selectedColor: {r: 0.18867922, g: 0.18867922, b: 0.18867922, a: 1}
+  disabledColor: {r: 0, g: 0, b: 0, a: 0}
+  avatarName: lightGreenOrg
+  player: player01
 --- !u!1 &263149740
 GameObject:
   m_ObjectHideFlags: 0
@@ -1160,6 +1310,7 @@ GameObject:
   - component: {fileID: 263149741}
   - component: {fileID: 263149743}
   - component: {fileID: 263149742}
+  - component: {fileID: 263149744}
   m_Layer: 5
   m_Name: Avatar02
   m_TagString: Untagged
@@ -1183,8 +1334,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 818, y: -332.36}
-  m_SizeDelta: {x: 1460, y: 2986.1006}
+  m_AnchoredPosition: {x: 833, y: -332.36}
+  m_SizeDelta: {x: 1994.5073, y: 2986.1006}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &263149742
 MonoBehaviour:
@@ -1224,6 +1375,27 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 263149740}
   m_CullTransparentMesh: 1
+--- !u!95 &263149744
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 263149740}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &283327639
 GameObject:
   m_ObjectHideFlags: 0
@@ -1236,6 +1408,7 @@ GameObject:
   - component: {fileID: 283327642}
   - component: {fileID: 283327641}
   - component: {fileID: 283327643}
+  - component: {fileID: 283327644}
   m_Layer: 5
   m_Name: Button (5)
   m_TagString: Untagged
@@ -1343,7 +1516,36 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 283327641}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 283327644}
+        m_TargetAssemblyTypeName: AvatarBtn, Assembly-CSharp
+        m_MethodName: SetAvatarData
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &283327644
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 283327639}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 421e3c96f432d9044b22d9d1b4226a6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controller: {fileID: 1241124487}
+  selectedColor: {r: 0.18867922, g: 0.18867922, b: 0.18867922, a: 1}
+  disabledColor: {r: 0, g: 0, b: 0, a: 0}
+  avatarName: whiteOrg
+  player: player02
 --- !u!1 &396846078
 GameObject:
   m_ObjectHideFlags: 0
@@ -1528,6 +1730,7 @@ GameObject:
   - component: {fileID: 554336514}
   - component: {fileID: 554336513}
   - component: {fileID: 554336515}
+  - component: {fileID: 554336516}
   m_Layer: 5
   m_Name: Button (2)
   m_TagString: Untagged
@@ -1635,7 +1838,36 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 554336513}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 554336516}
+        m_TargetAssemblyTypeName: AvatarBtn, Assembly-CSharp
+        m_MethodName: SetAvatarData
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &554336516
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 554336511}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 421e3c96f432d9044b22d9d1b4226a6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controller: {fileID: 1241124487}
+  selectedColor: {r: 0.18867922, g: 0.18867922, b: 0.18867922, a: 1}
+  disabledColor: {r: 0, g: 0, b: 0, a: 0}
+  avatarName: redOrg
+  player: player01
 --- !u!1 &613835639
 GameObject:
   m_ObjectHideFlags: 0
@@ -1996,8 +2228,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u200B"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: edc6dd06e7eee0449ad79e93f2fe9689, type: 2}
+  m_sharedMaterial: {fileID: -8844964569484215036, guid: edc6dd06e7eee0449ad79e93f2fe9689, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2151,8 +2383,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Enter Player 2 Name...
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: edc6dd06e7eee0449ad79e93f2fe9689, type: 2}
+  m_sharedMaterial: {fileID: -8844964569484215036, guid: edc6dd06e7eee0449ad79e93f2fe9689, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2238,6 +2470,7 @@ GameObject:
   - component: {fileID: 795138210}
   - component: {fileID: 795138209}
   - component: {fileID: 795138211}
+  - component: {fileID: 795138212}
   m_Layer: 5
   m_Name: Button (4)
   m_TagString: Untagged
@@ -2345,7 +2578,36 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 795138209}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 795138212}
+        m_TargetAssemblyTypeName: AvatarBtn, Assembly-CSharp
+        m_MethodName: SetAvatarData
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &795138212
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 795138207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 421e3c96f432d9044b22d9d1b4226a6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controller: {fileID: 1241124487}
+  selectedColor: {r: 0.18867922, g: 0.18867922, b: 0.18867922, a: 1}
+  disabledColor: {r: 0, g: 0, b: 0, a: 0}
+  avatarName: greenOrg
+  player: player01
 --- !u!1 &954423149
 GameObject:
   m_ObjectHideFlags: 0
@@ -2435,6 +2697,7 @@ GameObject:
   - component: {fileID: 1070800782}
   - component: {fileID: 1070800781}
   - component: {fileID: 1070800783}
+  - component: {fileID: 1070800784}
   m_Layer: 5
   m_Name: Button (5)
   m_TagString: Untagged
@@ -2542,7 +2805,36 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1070800781}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1070800784}
+        m_TargetAssemblyTypeName: AvatarBtn, Assembly-CSharp
+        m_MethodName: SetAvatarData
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1070800784
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1070800779}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 421e3c96f432d9044b22d9d1b4226a6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controller: {fileID: 1241124487}
+  selectedColor: {r: 0.18867922, g: 0.18867922, b: 0.18867922, a: 1}
+  disabledColor: {r: 0, g: 0, b: 0, a: 0}
+  avatarName: whiteOrg
+  player: player01
 --- !u!1 &1099574499
 GameObject:
   m_ObjectHideFlags: 0
@@ -2607,6 +2899,7 @@ GameObject:
   - component: {fileID: 1105135737}
   - component: {fileID: 1105135736}
   - component: {fileID: 1105135735}
+  - component: {fileID: 1105135738}
   m_Layer: 5
   m_Name: Player01_Name
   m_TagString: Untagged
@@ -2713,7 +3006,19 @@ MonoBehaviour:
       m_Calls: []
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1105135738}
+        m_TargetAssemblyTypeName: PlayerNameInputField, Assembly-CSharp
+        m_MethodName: OnValueChange
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_OnTouchScreenKeyboardStatusChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -2770,6 +3075,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1105135733}
   m_CullTransparentMesh: 1
+--- !u!114 &1105135738
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1105135733}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2fac9ade4afbc245af403a3659c323d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: player01
+  sceneController: {fileID: 1241124487}
 --- !u!1 &1144030327
 GameObject:
   m_ObjectHideFlags: 0
@@ -2829,8 +3148,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u200B"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: edc6dd06e7eee0449ad79e93f2fe9689, type: 2}
+  m_sharedMaterial: {fileID: -8844964569484215036, guid: edc6dd06e7eee0449ad79e93f2fe9689, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2972,6 +3291,75 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!1 &1241124486
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1241124488}
+  - component: {fileID: 1241124487}
+  m_Layer: 0
+  m_Name: SceneController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1241124487
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1241124486}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e55423e17f5a867429b9300d13ed3430, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player01_anim: {fileID: 1700072998}
+  player02_anim: {fileID: 263149744}
+  avatarName_player01: 
+  avatarName_player02: 
+  player01_name: 
+  player02_name: 
+  blueOrg: {fileID: 9100000, guid: 7381af84e249a8049915b7d7270aa4ce, type: 2}
+  greenOrg: {fileID: 9100000, guid: 8302a49e359003941a97c57d9ee729ff, type: 2}
+  lightGreenOrg: {fileID: 9100000, guid: acee412b04e57b64798f8b82f5b8d089, type: 2}
+  pinkOrg: {fileID: 9100000, guid: f3d3145d3bf993d4fa580cad0b043f60, type: 2}
+  redOrg: {fileID: 9100000, guid: f7c38b63633c72342aa3f6ead71b8045, type: 2}
+  whiteOrg: {fileID: 9100000, guid: 10b2b8eea190294458f293726fa38677, type: 2}
+  avatarButtons:
+  - {fileID: 262892658}
+  - {fileID: 100858903}
+  - {fileID: 554336516}
+  - {fileID: 228506150}
+  - {fileID: 795138212}
+  - {fileID: 1070800784}
+  - {fileID: 1617555532}
+  - {fileID: 208384204}
+  - {fileID: 90514301}
+  - {fileID: 1920657283}
+  - {fileID: 1360506679}
+  - {fileID: 283327644}
+--- !u!4 &1241124488
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1241124486}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 122.20186, y: 446.94464, z: -0.2507535}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1257599471
 GameObject:
   m_ObjectHideFlags: 0
@@ -3048,6 +3436,7 @@ GameObject:
   - component: {fileID: 1360506677}
   - component: {fileID: 1360506676}
   - component: {fileID: 1360506678}
+  - component: {fileID: 1360506679}
   m_Layer: 5
   m_Name: Button (4)
   m_TagString: Untagged
@@ -3155,7 +3544,36 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1360506676}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1360506679}
+        m_TargetAssemblyTypeName: AvatarBtn, Assembly-CSharp
+        m_MethodName: SetAvatarData
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1360506679
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1360506674}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 421e3c96f432d9044b22d9d1b4226a6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controller: {fileID: 1241124487}
+  selectedColor: {r: 0.18867922, g: 0.18867922, b: 0.18867922, a: 1}
+  disabledColor: {r: 0, g: 0, b: 0, a: 0}
+  avatarName: greenOrg
+  player: player02
 --- !u!1 &1609949751
 GameObject:
   m_ObjectHideFlags: 0
@@ -3168,6 +3586,7 @@ GameObject:
   - component: {fileID: 1609949755}
   - component: {fileID: 1609949754}
   - component: {fileID: 1609949753}
+  - component: {fileID: 1609949756}
   m_Layer: 5
   m_Name: NextBtn
   m_TagString: Untagged
@@ -3237,7 +3656,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1609949754}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1609949756}
+        m_TargetAssemblyTypeName: NextBtn, Assembly-CSharp
+        m_MethodName: OnClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1609949754
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3276,6 +3707,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1609949751}
   m_CullTransparentMesh: 1
+--- !u!114 &1609949756
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1609949751}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 744e583cd91df9347a480c251ad92b1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controller: {fileID: 1241124487}
 --- !u!1 &1617555527
 GameObject:
   m_ObjectHideFlags: 0
@@ -3288,6 +3732,7 @@ GameObject:
   - component: {fileID: 1617555530}
   - component: {fileID: 1617555529}
   - component: {fileID: 1617555531}
+  - component: {fileID: 1617555532}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -3395,7 +3840,36 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1617555529}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1617555532}
+        m_TargetAssemblyTypeName: AvatarBtn, Assembly-CSharp
+        m_MethodName: SetAvatarData
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1617555532
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1617555527}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 421e3c96f432d9044b22d9d1b4226a6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controller: {fileID: 1241124487}
+  selectedColor: {r: 0.18867922, g: 0.18867922, b: 0.18867922, a: 1}
+  disabledColor: {r: 0, g: 0, b: 0, a: 0}
+  avatarName: lightGreenOrg
+  player: player02
 --- !u!1 &1630250667
 GameObject:
   m_ObjectHideFlags: 0
@@ -3482,6 +3956,7 @@ GameObject:
   - component: {fileID: 1700072995}
   - component: {fileID: 1700072997}
   - component: {fileID: 1700072996}
+  - component: {fileID: 1700072998}
   m_Layer: 5
   m_Name: Avatar01
   m_TagString: Untagged
@@ -3505,8 +3980,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 274, y: -332.36}
-  m_SizeDelta: {x: 1460, y: 2986.1006}
+  m_AnchoredPosition: {x: 279.00006, y: -332.36}
+  m_SizeDelta: {x: 2170.9912, y: 2986.1006}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1700072996
 MonoBehaviour:
@@ -3546,6 +4021,27 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1700072994}
   m_CullTransparentMesh: 1
+--- !u!95 &1700072998
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1700072994}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1776238361
 GameObject:
   m_ObjectHideFlags: 0
@@ -3634,6 +4130,7 @@ GameObject:
   - component: {fileID: 1798946108}
   - component: {fileID: 1798946107}
   - component: {fileID: 1798946106}
+  - component: {fileID: 1798946109}
   m_Layer: 5
   m_Name: Player02_Name
   m_TagString: Untagged
@@ -3740,7 +4237,19 @@ MonoBehaviour:
       m_Calls: []
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1798946109}
+        m_TargetAssemblyTypeName: PlayerNameInputField, Assembly-CSharp
+        m_MethodName: OnValueChange
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_OnTouchScreenKeyboardStatusChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -3797,6 +4306,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1798946104}
   m_CullTransparentMesh: 1
+--- !u!114 &1798946109
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1798946104}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2fac9ade4afbc245af403a3659c323d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: player02
+  sceneController: {fileID: 1241124487}
 --- !u!1 &1866945983
 GameObject:
   m_ObjectHideFlags: 0
@@ -3885,6 +4408,7 @@ GameObject:
   - component: {fileID: 1920657281}
   - component: {fileID: 1920657280}
   - component: {fileID: 1920657282}
+  - component: {fileID: 1920657283}
   m_Layer: 5
   m_Name: Button (3)
   m_TagString: Untagged
@@ -3992,7 +4516,36 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1920657280}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1920657283}
+        m_TargetAssemblyTypeName: AvatarBtn, Assembly-CSharp
+        m_MethodName: SetAvatarData
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1920657283
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1920657278}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 421e3c96f432d9044b22d9d1b4226a6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controller: {fileID: 1241124487}
+  selectedColor: {r: 0.18867922, g: 0.18867922, b: 0.18867922, a: 1}
+  disabledColor: {r: 0, g: 0, b: 0, a: 0}
+  avatarName: blueOrg
+  player: player02
 --- !u!1 &2006745099
 GameObject:
   m_ObjectHideFlags: 0
@@ -4069,3 +4622,4 @@ SceneRoots:
   - {fileID: 520631965}
   - {fileID: 765320177}
   - {fileID: 262747855}
+  - {fileID: 1241124488}
