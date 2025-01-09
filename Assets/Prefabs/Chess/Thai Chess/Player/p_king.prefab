@@ -90,7 +90,7 @@ MonoBehaviour:
   isKing: 0
   chessImage: {fileID: 6683578038845828279}
   checkerSprite: {fileID: 21300000, guid: a89afd6d43410c040a51c1a92b80c425, type: 3}
-  kingSprite: {fileID: 21300000, guid: 881c932f568201c4ba85ad7daebedb1e, type: 3}
+  downPanwSprite: {fileID: 0}
   frozenColor: {r: 0.23300098, g: 0.5279466, b: 0.9622642, a: 1}
   normalColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &8094967234120975581
@@ -120,14 +120,14 @@ RectTransform:
   m_GameObject: {fileID: 8094967234120975581}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.0619, y: 1.0619, z: 1.0619}
+  m_LocalScale: {x: 0.874188, y: 0.874188, z: 0.874188}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8262740617422072912}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.70000076, y: 0}
+  m_AnchoredPosition: {x: 0.70000076, y: 0.20000076}
   m_SizeDelta: {x: -6.6462, y: -6.2577}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5065967991025043700
@@ -158,7 +158,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 881c932f568201c4ba85ad7daebedb1e, type: 3}
+  m_Sprite: {fileID: 1574505964, guid: c03d23ef09e7a754ba24a27400988f8f, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
