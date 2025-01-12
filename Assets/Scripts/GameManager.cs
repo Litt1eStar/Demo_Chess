@@ -125,7 +125,7 @@ public class GameManager : MonoBehaviour
             
         UpdateDataOnKill(targetCell);
         MovePieceToTarget(currentChessPiece, targetCell);
-        UpdateUIOnKill();
+        //UpdateUIOnKill();
         board.ClearPossibleCellToMove();
         board.ClearAllHighlightOnBoard();
 
@@ -232,12 +232,13 @@ public class GameManager : MonoBehaviour
     {
         if (winner == Turn.ENEMY)
         {
-            SceneManager.LoadScene("EnemyWin");
+            PlayerPrefs.SetString("Winner", ui.player02_avatarName);
         }
         else if (winner == Turn.PLAYER)
         {
-            SceneManager.LoadScene("PlayerWin");
+            PlayerPrefs.SetString("Winner", ui.player01_avatarName);
         }
+        SceneManager.LoadScene("PlayerWin");
     }
     private void UpdateDataOnKill(Cell targetCell)
     {

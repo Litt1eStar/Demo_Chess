@@ -14,6 +14,9 @@ public class UIController : MonoBehaviour
     public TextMeshProUGUI player02_txt;
     public string player02_name;
 
+    public string player01_avatarName;
+    public string player02_avatarName;
+
     public AnimatorController blueOrg;
     public AnimatorController greenOrg;
     public AnimatorController lightGreenOrg;
@@ -47,16 +50,16 @@ public class UIController : MonoBehaviour
     }
     private void HandlePlayerName()
     {
-        string _player01_name = PlayerPrefs.GetString("player01_name");
-        string _player02_name = PlayerPrefs.GetString("player02_name");
+        string player01_name = PlayerPrefs.GetString("player01_name");
+        string player02_name = PlayerPrefs.GetString("player02_name");
 
-        player01_txt.text = _player01_name;
-        player02_txt.text = _player02_name;
+        player01_txt.text = player01_name;
+        player02_txt.text = player02_name;
     }
     private void HandleAvatar()
     {
-        string player01_avatarName = PlayerPrefs.GetString("player01");
-        string player02_avatarName = PlayerPrefs.GetString("player02");
+        player01_avatarName = PlayerPrefs.GetString("player01");
+        player02_avatarName = PlayerPrefs.GetString("player02");
 
         Debug.Log(player01_avatarName);
         Debug.Log(player02_avatarName);
